@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>UCCP.SBD.Membership</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\UCCP.SBD.Membership.Domain\UCCP.SBD.Membership.Domain.csproj" />
+    <ProjectReference Include="..\UCCP.SBD.Membership.TestBase\UCCP.SBD.Membership.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>

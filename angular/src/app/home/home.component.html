@@ -1,0 +1,120 @@
+<ng-container *ngIf="isLoggingIn; else mainContent">
+  <ng-container *ngTemplateOutlet="loadingConfig"></ng-container>
+</ng-container>
+
+<ng-template #mainContent>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12" *ngIf="!hasLoggedIn">
+        <div class="card shadow-lg border-0 mx-auto" style="max-width: 500px;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-4">
+              <i class="fas fa-users-cog fa-3x text-primary"></i>
+            </div>
+            <h2 class="fw-bold mb-4">Login</h2>
+            <form (ngSubmit)="login()">
+              <div class="form-group mb-3 text-start">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" [(ngModel)]="username" name="username" required>
+              </div>
+              <div class="form-group mb-3 text-start">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password"
+                  required>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary" [disabled]="isLoggingIn">
+                  {{ isLoggingIn ? 'Logging in...' : 'Login' }}
+                </button>
+              </div>
+              <div *ngIf="loginError" class="alert alert-danger mt-3">{{ loginError }}</div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 text-center" *ngIf="hasLoggedIn">
+        <div class="p-5 mb-4 bg-light rounded-3 shadow">
+          <div class="container-fluid py-5">
+            <h1 class="display-4 fw-bold text-primary mb-3">Welcome to United Church of Christ in the Philippines</h1>
+            <h2 class="display-6 text-secondary mb-4">Sambahan sa Baybay Dagat Membership System</h2>
+            <p class="lead mb-4">Manage members, organizations, and membership types efficiently.</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <a routerLink="/members" class="btn btn-primary btn-lg px-4 gap-3">Manage Members</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loadingConfig>
+  <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="lead mt-3 text-muted">Refreshing application configuration...</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #startingContentTemplate let-context>
+  <p class="lead text-muted mb-2" [innerHTML]="context.description"></p>
+  <a [href]="context.href" class="btn btn-brand mb-4" target="_blank">{{ context.label }}</a>
+</ng-template>
+
+<ng-template #visitLinkTemplate let-context>
+  <div class="col-12 d-flex">
+    <div [class]="context.card">
+      <div class="card-body pb-0">
+        <div [class]="context.logo"></div>
+        <p class="text-muted mb-2" [innerHTML]="context.description"></p>
+        <a [href]="context.href" class="btn btn-brand soft" target="_blank">{{ context.label }}</a>
+        <img [class]="context.imgClass" [src]="context.imgSrc" />
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #tableTemplate let-context>
+  <div class="col-xl-3 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title text-body">{{ context.title }}</div>
+      </div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <tbody>
+              @for(item of context.items; track $index; let last = $last){
+              <tr>
+                <td class="ps-0 d-flex" [class.border-bottom-0]="last">
+                  @if(item.icon){
+                  <div [ngClass]="item.iconClass" [style]="item.style ? 'width: 20px; height: 20px' : ''">
+                    @if(item.iconType === 'image'){
+                    <img [src]="item.icon" class="me-2" />
+                    }@else if(item.iconType === 'icon'){
+                    <i [class]="item.icon"></i>
+                    }@else{
+                    <div [class]="item.icon"></div>
+                    }
+                  </div>
+                  }
+                  <div>{{ item.title }}</div>
+                </td>
+                <td class="text-end pe-0 opacity-25" [class.border-bottom-0]="last">
+                  <a [href]="item.link" target="_blank">
+                    <i class="bi bi-box-arrow-up-right text-dark"></i>
+                  </a>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
