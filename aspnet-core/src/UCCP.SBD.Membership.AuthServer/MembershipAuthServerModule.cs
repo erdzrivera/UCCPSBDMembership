@@ -77,13 +77,16 @@ public class MembershipAuthServerModule : AbpModule
         {
             PreConfigure<AbpOpenIddictAspNetCoreOptions>(options =>
             {
-                options.AddDevelopmentEncryptionAndSigningCertificate = false;
+                // Use development certificates for cloud deployment
+                // Production certificate file is not available in Docker container
+                options.AddDevelopmentEncryptionAndSigningCertificate = true;
             });
 
-            PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
-            {
-                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "9117282c-b3e1-4a9c-9963-a5f0105cb524");
-            });
+            // Commented out - certificate file not available in Docker
+            // PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
+            // {
+            //     serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "9117282c-b3e1-4a9c-9963-a5f0105cb524");
+            // });
         }
     }
 
