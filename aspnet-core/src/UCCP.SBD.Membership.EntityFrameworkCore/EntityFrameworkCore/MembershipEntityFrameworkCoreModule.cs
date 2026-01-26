@@ -29,6 +29,9 @@ public class MembershipEntityFrameworkCoreModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+        // Fix for PostgreSQL DateTime timezone issue with .NET 9
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        
         MembershipEfCoreEntityExtensionMappings.Configure();
     }
 
