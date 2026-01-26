@@ -30,17 +30,6 @@ public class MembershipMongoDbModule : AbpModule
         context.Services.AddMongoDbContext<MembershipMongoDbContext>(options =>
         {
             options.AddDefaultRepositories(includeAllEntities: true);
-            
-            // Configure MongoDB client to bypass SSL certificate validation
-            // This is needed for .NET 9 in Docker containers connecting to MongoDB Atlas
-            options.ConfigureMongoClient = (connectionString, settings) =>
-            {
-                settings.SslSettings = new MongoDB.Driver.SslSettings
-                {
-                    ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
-                };
-                return settings;
-            };
         });
 
         Configure<AbpUnitOfWorkDefaultOptions>(options =>
