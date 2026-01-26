@@ -2,17 +2,16 @@ services:
   # API Host Service
   - type: web
     name: uccp-membership-api
-    runtime: dotnet
+    runtime: docker
     region: singapore
     plan: free
     branch: main
-    buildCommand: dotnet publish aspnet-core/src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj -c Release -o out
-    startCommand: dotnet out/UCCP.SBD.Membership.HttpApi.Host.dll
+    dockerfilePath: ./aspnet-core/Dockerfile.api
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS
-        value: http://0.0.0.0:$PORT
+        value: http://0.0.0.0:8080
       - key: ConnectionStrings__Default
         sync: false
       - key: Redis__Configuration
@@ -29,17 +28,16 @@ services:
   # Auth Server Service
   - type: web
     name: uccp-membership-auth
-    runtime: dotnet
+    runtime: docker
     region: singapore
     plan: free
     branch: main
-    buildCommand: dotnet publish aspnet-core/src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj -c Release -o out
-    startCommand: dotnet out/UCCP.SBD.Membership.AuthServer.dll
+    dockerfilePath: ./aspnet-core/Dockerfile.auth
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS
-        value: http://0.0.0.0:$PORT
+        value: http://0.0.0.0:8080
       - key: ConnectionStrings__Default
         sync: false
       - key: Redis__Configuration
