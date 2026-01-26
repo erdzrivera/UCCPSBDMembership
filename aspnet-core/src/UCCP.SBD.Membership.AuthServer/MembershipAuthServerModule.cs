@@ -232,6 +232,16 @@ public class MembershipAuthServerModule : AbpModule
             app.UseDeveloperExceptionPage();
         }
 
+        // Add proper Forwarded Headers support for Render/Proxy
+        var forwardOptions = new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | 
+                               Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+        };
+        forwardOptions.KnownNetworks.Clear();
+        forwardOptions.KnownProxies.Clear();
+        app.UseForwardedHeaders(forwardOptions);
+
         app.UseAbpRequestLocalization();
 
         if (!env.IsDevelopment())

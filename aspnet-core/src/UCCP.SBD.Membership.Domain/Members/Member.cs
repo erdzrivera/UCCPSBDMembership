@@ -3,7 +3,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace UCCP.SBD.Membership.Members
 {
-    public class Member : FullAuditedAggregateRoot<Guid>
+    public class Member : AuditedAggregateRoot<Guid>
     {
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
