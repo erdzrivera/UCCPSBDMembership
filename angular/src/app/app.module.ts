@@ -2,9 +2,7 @@ import { CoreModule, provideAbpCore, withOptions } from '@abp/ng.core';
 import { registerLocale } from '@abp/ng.core/locale';
 import { provideFeatureManagementConfig } from '@abp/ng.feature-management';
 import { provideAbpOAuth } from '@abp/ng.oauth';
-import { provideIdentityConfig } from '@abp/ng.identity/config';
 import { provideSettingManagementConfig } from '@abp/ng.setting-management/config';
-import { provideTenantManagementConfig } from '@abp/ng.tenant-management/config';
 import { provideAccountConfig } from '@abp/ng.account/config';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -42,8 +40,6 @@ import { ThemeSharedModule, withHttpErrorConfig, withValidationBluePrint, provid
     provideAbpOAuth(),
     provideSettingManagementConfig(),
     provideAccountConfig(),
-    provideIdentityConfig(),
-    provideTenantManagementConfig(),
     provideFeatureManagementConfig(),
     provideAbpThemeShared(
       withValidationBluePrint({
@@ -54,4 +50,4 @@ import { ThemeSharedModule, withHttpErrorConfig, withValidationBluePrint, provid
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }

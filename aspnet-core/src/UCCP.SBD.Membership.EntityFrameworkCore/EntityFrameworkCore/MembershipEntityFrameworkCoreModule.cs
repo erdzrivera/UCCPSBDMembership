@@ -50,5 +50,28 @@ public class MembershipEntityFrameworkCoreModule : AbpModule
              * See also MembershipMigrationsDbContextFactory for EF Core tooling. */
             options.UseNpgsql();
         });
+        
+        // Fix for Render.com PostgreSQL connection string format (postgres://)
+        context.Services.PostConfigure<Volo.Abp.Data.AbpDbConnectionOptions>(options =>
+        {
+            var connectionString = options.ConnectionStrings.Default;
+            if (!string.IsNullOrEmpty(connectionString) && 
+                (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://")))
+            {
+                var uri = new System.Uri(connectionString);
+                var userInfo = uri.UserInfo.Split(':');
+                var builder = new Npgsql.NpgsqlConnectionStringBuilder
+                {
+                    Host = uri.Host,
+                    Port = uri.Port,
+                    Database = uri.AbsolutePath.TrimStart('/'),
+                    Username = userInfo[0],
+                    Password = userInfo.Length > 1 ? userInfo[1] : null,
+                    SslMode = Npgsql.SslMode.Prefer // Render usually needs SSL
+                };
+                
+                options.ConnectionStrings.Default = builder.ToString();
+            }
+        });
     }
 }
