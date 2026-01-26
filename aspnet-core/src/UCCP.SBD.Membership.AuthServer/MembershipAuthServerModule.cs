@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UCCP.SBD.Membership.Localization;
-using UCCP.SBD.Membership.MongoDB;
+using UCCP.SBD.Membership.EntityFrameworkCore;
 using UCCP.SBD.Membership.MultiTenancy;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -44,7 +44,7 @@ namespace UCCP.SBD.Membership;
     typeof(AbpAccountApplicationModule),
     typeof(AbpAccountHttpApiModule),
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
-    typeof(MembershipMongoDbModule),
+    typeof(MembershipEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
     )]
@@ -206,11 +206,6 @@ public class MembershipAuthServerModule : AbpModule
         Configure<SettingManagementOptions>(options =>
         {
             options.SaveStaticSettingsToDatabase = false;
-        });
-
-        Configure<AbpUnitOfWorkDefaultOptions>(options =>
-        {
-            options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
         });
     }
 

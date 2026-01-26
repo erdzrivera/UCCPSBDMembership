@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UCCP.SBD.Membership.Application\UCCP.SBD.Membership.Application.csproj" />
-    <ProjectReference Include="..\UCCP.SBD.Membership.MongoDB\UCCP.SBD.Membership.MongoDB.csproj" />
+    <ProjectReference Include="..\UCCP.SBD.Membership.EntityFrameworkCore\UCCP.SBD.Membership.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\UCCP.SBD.Membership.HttpApi\UCCP.SBD.Membership.HttpApi.csproj" />
   </ItemGroup>
 

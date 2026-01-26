@@ -1,4 +1,4 @@
-using UCCP.SBD.Membership.MongoDB;
+using UCCP.SBD.Membership.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Modularity;
@@ -7,7 +7,7 @@ namespace UCCP.SBD.Membership.DbMigrator;
 
 [DependsOn(
     typeof(AbpAutofacModule),
-    typeof(MembershipMongoDbModule),
+    typeof(MembershipEntityFrameworkCoreModule),
     typeof(MembershipApplicationContractsModule),
     typeof(MembershipApplicationModule)
     )]

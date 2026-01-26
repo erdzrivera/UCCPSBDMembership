@@ -55,7 +55,9 @@
     <PackageReference Include="Volo.Abp.Account.Application" Version="9.2.3" />
     <PackageReference Include="Volo.Abp.Account.HttpApi" Version="9.2.3" />
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="9.2.3" />
-    <ProjectReference Include="..\UCCP.SBD.Membership.MongoDB\UCCP.SBD.Membership.MongoDB.csproj" />
+    <ProjectReference Include="..\UCCP.SBD.Membership.Application\UCCP.SBD.Membership.Application.csproj" />
+    <ProjectReference Include="..\UCCP.SBD.Membership.HttpApi\UCCP.SBD.Membership.HttpApi.csproj" />
+    <ProjectReference Include="..\UCCP.SBD.Membership.EntityFrameworkCore\UCCP.SBD.Membership.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

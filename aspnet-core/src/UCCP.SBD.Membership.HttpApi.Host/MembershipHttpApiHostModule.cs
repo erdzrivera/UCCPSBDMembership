@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using UCCP.SBD.Membership.MongoDB;
+using UCCP.SBD.Membership.EntityFrameworkCore;
 using UCCP.SBD.Membership.MultiTenancy;
 using Microsoft.OpenApi.Models;
 using Volo.Abp;
@@ -41,7 +41,7 @@ namespace UCCP.SBD.Membership;
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(MembershipApplicationModule),
-    typeof(MembershipMongoDbModule),
+    typeof(MembershipEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
 )]
@@ -70,11 +70,6 @@ public class MembershipHttpApiHostModule : AbpModule
         Configure<SettingManagementOptions>(options =>
         {
             options.SaveStaticSettingsToDatabase = false;
-        });
-
-        Configure<AbpUnitOfWorkDefaultOptions>(options =>
-        {
-            options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
         });
     }
 
