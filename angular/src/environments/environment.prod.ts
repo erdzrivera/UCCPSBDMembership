@@ -15,7 +15,8 @@ export const environment = {
     clientId: 'Membership_App',
     responseType: 'code',
     scope: 'openid offline_access Membership',
-    requireHttps: true
+    requireHttps: true,
+    oidc: false
   },
   apis: {
     default: {
