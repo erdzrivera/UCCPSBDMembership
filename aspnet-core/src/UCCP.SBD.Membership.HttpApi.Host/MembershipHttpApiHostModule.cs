@@ -84,7 +84,7 @@ public class MembershipHttpApiHostModule : AbpModule
 
         if (hostingEnvironment.IsDevelopment())
         {
-            Configure<AbpVirtualFileSystemOptions>(options =>
+            /* Configure<AbpVirtualFileSystemOptions>(options =>
             {
                 options.FileSets.ReplaceEmbeddedByPhysical<MembershipDomainSharedModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
@@ -98,7 +98,7 @@ public class MembershipHttpApiHostModule : AbpModule
                 options.FileSets.ReplaceEmbeddedByPhysical<MembershipApplicationModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
                         $"..{Path.DirectorySeparatorChar}UCCP.SBD.Membership.Application"));
-            });
+            }); */
         }
     }
 
