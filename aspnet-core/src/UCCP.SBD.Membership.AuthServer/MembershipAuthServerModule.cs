@@ -209,10 +209,22 @@ public class MembershipAuthServerModule : AbpModule
         });
     }
 
-    public override void OnApplicationInitialization(ApplicationInitializationContext context)
+    public override async Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
+
+        // Auto-create database schema on startup
+        using (var scope = context.ServiceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<EntityFrameworkCore.MembershipDbContext>();
+            await dbContext.Database.EnsureCreatedAsync();
+            
+            // Seed initial data
+            await scope.ServiceProvider
+                .GetRequiredService<Volo.Abp.Data.IDataSeeder>()
+                .SeedAsync();
+        }
 
         if (env.IsDevelopment())
         {
