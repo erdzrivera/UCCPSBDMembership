@@ -2,23 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copy solution and project files
-COPY aspnet-core/*.sln ./
-COPY aspnet-core/src/UCCP.SBD.Membership.AuthServer/*.csproj ./src/UCCP.SBD.Membership.AuthServer/
-COPY aspnet-core/src/UCCP.SBD.Membership.Application/*.csproj ./src/UCCP.SBD.Membership.Application/
-COPY aspnet-core/src/UCCP.SBD.Membership.Application.Contracts/*.csproj ./src/UCCP.SBD.Membership.Application.Contracts/
-COPY aspnet-core/src/UCCP.SBD.Membership.Domain/*.csproj ./src/UCCP.SBD.Membership.Domain/
-COPY aspnet-core/src/UCCP.SBD.Membership.Domain.Shared/*.csproj ./src/UCCP.SBD.Membership.Domain.Shared/
-COPY aspnet-core/src/UCCP.SBD.Membership.MongoDB/*.csproj ./src/UCCP.SBD.Membership.MongoDB/
-
-# Restore dependencies
-RUN dotnet restore
-
-# Copy everything else
+# Copy all source code
 COPY aspnet-core/ ./
 
-# Build and publish
-RUN dotnet publish src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj -c Release -o /app/publish
+# Restore and build only the Auth Server project
+RUN dotnet restore src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj
+RUN dotnet publish src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj -c Release -o /app/publish --no-restore
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0

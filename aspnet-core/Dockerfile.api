@@ -2,25 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copy solution and project files
-COPY aspnet-core/*.sln ./
-COPY aspnet-core/src/UCCP.SBD.Membership.HttpApi.Host/*.csproj ./src/UCCP.SBD.Membership.HttpApi.Host/
-COPY aspnet-core/src/UCCP.SBD.Membership.HttpApi/*.csproj ./src/UCCP.SBD.Membership.HttpApi/
-COPY aspnet-core/src/UCCP.SBD.Membership.Application/*.csproj ./src/UCCP.SBD.Membership.Application/
-COPY aspnet-core/src/UCCP.SBD.Membership.Application.Contracts/*.csproj ./src/UCCP.SBD.Membership.Application.Contracts/
-COPY aspnet-core/src/UCCP.SBD.Membership.Domain/*.csproj ./src/UCCP.SBD.Membership.Domain/
-COPY aspnet-core/src/UCCP.SBD.Membership.Domain.Shared/*.csproj ./src/UCCP.SBD.Membership.Domain.Shared/
-COPY aspnet-core/src/UCCP.SBD.Membership.MongoDB/*.csproj ./src/UCCP.SBD.Membership.MongoDB/
-COPY aspnet-core/src/UCCP.SBD.Membership.HttpApi.Client/*.csproj ./src/UCCP.SBD.Membership.HttpApi.Client/
-
-# Restore dependencies
-RUN dotnet restore
-
-# Copy everything else
+# Copy all source code
 COPY aspnet-core/ ./
 
-# Build and publish
-RUN dotnet publish src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj -c Release -o /app/publish
+# Restore and build only the API Host project
+RUN dotnet restore src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj
+RUN dotnet publish src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj -c Release -o /app/publish --no-restore
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
