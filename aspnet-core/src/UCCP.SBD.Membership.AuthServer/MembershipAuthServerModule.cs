@@ -224,7 +224,7 @@ public class MembershipAuthServerModule : AbpModule
             // Seed initial data
             await scope.ServiceProvider
                 .GetRequiredService<Volo.Abp.Data.IDataSeeder>()
-                .SeedAsync();
+                .SeedAsync(new Volo.Abp.Data.DataSeedContext());
         }
 
         if (env.IsDevelopment())
