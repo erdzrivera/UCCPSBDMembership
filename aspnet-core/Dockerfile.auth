@@ -17,7 +17,10 @@ COPY --from=build /app/publish .
 # Expose port 8080 (Render.com uses this)
 EXPOSE 8080
 
-# Set environment variable for port
+# Set environment variables for port and OpenSSL configuration
 ENV ASPNETCORE_URLS=http://+:8080
+# Allow legacy SSL/TLS for MongoDB Atlas compatibility
+ENV OPENSSL_CONF=/dev/null
+ENV COMPlus_EnableDiagnostics=0
 
 ENTRYPOINT ["dotnet", "UCCP.SBD.Membership.AuthServer.dll"]
