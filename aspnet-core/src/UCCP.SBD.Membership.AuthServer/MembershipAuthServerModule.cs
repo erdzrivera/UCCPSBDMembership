@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using UCCP.SBD.Membership.Localization;
 using UCCP.SBD.Membership.EntityFrameworkCore;
 using UCCP.SBD.Membership.MultiTenancy;
@@ -213,7 +214,7 @@ public class MembershipAuthServerModule : AbpModule
     {
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
-
+ 
         // Auto-create database schema on startup
         using (var scope = context.ServiceProvider.CreateScope())
         {
