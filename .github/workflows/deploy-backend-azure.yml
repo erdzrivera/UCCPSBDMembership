@@ -1,0 +1,75 @@
+name: Deploy Backend to Azure
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'aspnet-core/**'
+      - '.github/workflows/deploy-backend-azure.yml'
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '9.0.x'
+
+jobs:
+  build-and-deploy-api:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      working-directory: ./aspnet-core
+      run: dotnet restore
+      
+    - name: Build API Host
+      working-directory: ./aspnet-core
+      run: dotnet build src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj --configuration Release --no-restore
+      
+    - name: Publish API Host
+      working-directory: ./aspnet-core
+      run: dotnet publish src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj --configuration Release --no-build --output ./api-publish
+      
+    - name: Deploy API to Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ secrets.AZURE_API_APP_NAME }}
+        publish-profile: ${{ secrets.AZURE_API_PUBLISH_PROFILE }}
+        package: ./aspnet-core/api-publish
+
+  build-and-deploy-auth:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      working-directory: ./aspnet-core
+      run: dotnet restore
+      
+    - name: Build Auth Server
+      working-directory: ./aspnet-core
+      run: dotnet build src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj --configuration Release --no-restore
+      
+    - name: Publish Auth Server
+      working-directory: ./aspnet-core
+      run: dotnet publish src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj --configuration Release --no-build --output ./auth-publish
+      
+    - name: Deploy Auth Server to Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ secrets.AZURE_AUTH_APP_NAME }}
+        publish-profile: ${{ secrets.AZURE_AUTH_PUBLISH_PROFILE }}
+        package: ./aspnet-core/auth-publish

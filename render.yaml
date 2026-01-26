@@ -1,0 +1,60 @@
+services:
+  # API Host Service
+  - type: web
+    name: uccp-membership-api
+    runtime: dotnet
+    region: singapore
+    plan: free
+    branch: main
+    buildCommand: dotnet publish aspnet-core/src/UCCP.SBD.Membership.HttpApi.Host/UCCP.SBD.Membership.HttpApi.Host.csproj -c Release -o out
+    startCommand: dotnet out/UCCP.SBD.Membership.HttpApi.Host.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
+      - key: ConnectionStrings__Default
+        sync: false
+      - key: Redis__Configuration
+        sync: false
+      - key: AuthServer__Authority
+        sync: false
+      - key: App__CorsOrigins
+        value: https://erdzrivera.github.io
+      - key: OpenIddict__Applications__Membership_App__RootUrl
+        value: https://erdzrivera.github.io/UCCPSBDMembership
+      - key: OpenIddict__Applications__Membership_Swagger__RootUrl
+        sync: false
+
+  # Auth Server Service
+  - type: web
+    name: uccp-membership-auth
+    runtime: dotnet
+    region: singapore
+    plan: free
+    branch: main
+    buildCommand: dotnet publish aspnet-core/src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj -c Release -o out
+    startCommand: dotnet out/UCCP.SBD.Membership.AuthServer.dll
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
+      - key: ConnectionStrings__Default
+        sync: false
+      - key: Redis__Configuration
+        sync: false
+      - key: App__SelfUrl
+        sync: false
+      - key: App__ClientUrl
+        value: https://erdzrivera.github.io/UCCPSBDMembership
+      - key: App__CorsOrigins
+        value: https://erdzrivera.github.io
+      - key: App__RedirectAllowedUrls
+        value: https://erdzrivera.github.io/UCCPSBDMembership
+      - key: AuthServer__Authority
+        sync: false
+      - key: OpenIddict__Applications__Membership_App__RootUrl
+        value: https://erdzrivera.github.io/UCCPSBDMembership
+      - key: OpenIddict__Applications__Membership_Swagger__RootUrl
+        sync: false

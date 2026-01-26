@@ -1,26 +1,28 @@
 import { Environment } from '@abp/ng.core';
 
-const baseUrl = 'http://localhost:4200';
+const baseUrl = 'https://erdzrivera.github.io/UCCPSBDMembership';
 
 export const environment = {
   production: true,
   application: {
     baseUrl,
     name: 'Membership',
-    logoUrl: '',
+    logoUrl: '/UCCPSBDMembership/assets/images/logo/uccp-text-logo.png',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44361/',
+    issuer: 'https://uccp-membership-auth.onrender.com/',
     redirectUri: baseUrl,
     clientId: 'Membership_App',
     responseType: 'code',
-    scope: 'offline_access Membership',
+    scope: 'openid offline_access Membership',
     requireHttps: true
   },
   apis: {
     default: {
-      url: 'https://localhost:44343',
+      url: 'https://uccp-membership-api.onrender.com',
       rootNamespace: 'UCCP.SBD.Membership',
     },
   },
 } as Environment;
+
+
