@@ -28,13 +28,13 @@
       </div>
       <div class="col-12 col-md-3">
         <div class="input-group">
-          <span class="input-group-text">From</span>
+          <span class="input-group-text"><i class="fa fa-birthday-cake me-1"></i> From</span>
           <input type="date" class="form-control" [(ngModel)]="birthdayStart" (change)="list.get()">
         </div>
       </div>
       <div class="col-12 col-md-3">
         <div class="input-group">
-          <span class="input-group-text">To</span>
+          <span class="input-group-text"><i class="fa fa-birthday-cake me-1"></i> To</span>
           <input type="date" class="form-control" [(ngModel)]="birthdayEnd" (change)="list.get()">
         </div>
       </div>
@@ -44,9 +44,9 @@
       (activate)="onActivate($event)" class="material clickable-rows">
 
       <!-- Reverted to Separate Columns for Sorting -->
+      <ngx-datatable-column [name]="'::Last Name' | abpLocalization" prop="lastName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::First Name' | abpLocalization" prop="firstName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Middle Name' | abpLocalization" prop="middleName"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Last Name' | abpLocalization" prop="lastName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Birthday' | abpLocalization" prop="birthday">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.birthday | date:'mediumDate' }}

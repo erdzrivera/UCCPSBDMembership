@@ -40,14 +40,39 @@ namespace UCCP.SBD.Membership.Members
                                              x.MiddleName.Contains(input.Filter));
                 }
 
-                if (!input.BirthdayStart.IsNullOrWhiteSpace())
+                if (!input.BirthdayStart.IsNullOrWhiteSpace() || !input.BirthdayEnd.IsNullOrWhiteSpace())
                 {
-                    query = query.Where(x => x.Birthday.CompareTo(input.BirthdayStart) >= 0);
-                }
+                    // Normalize inputs to "MM-DD" (strip year "yyyy-" if present)
+                    var startMd = !input.BirthdayStart.IsNullOrWhiteSpace() && input.BirthdayStart.Length > 5 
+                        ? input.BirthdayStart.Substring(5) 
+                        : input.BirthdayStart;
+                        
+                    var endMd = !input.BirthdayEnd.IsNullOrWhiteSpace() && input.BirthdayEnd.Length > 5 
+                        ? input.BirthdayEnd.Substring(5) 
+                        : input.BirthdayEnd;
 
-                if (!input.BirthdayEnd.IsNullOrWhiteSpace())
-                {
-                    query = query.Where(x => x.Birthday.CompareTo(input.BirthdayEnd) <= 0);
+                    if (!startMd.IsNullOrWhiteSpace() && !endMd.IsNullOrWhiteSpace())
+                    {
+                        // Wrap around case (e.g. Dec to Jan)
+                        if (string.Compare(startMd, endMd) > 0)
+                        {
+                            query = query.Where(x => x.Birthday.Substring(5).CompareTo(startMd) >= 0 || 
+                                                     x.Birthday.Substring(5).CompareTo(endMd) <= 0);
+                        }
+                        else
+                        {
+                            query = query.Where(x => x.Birthday.Substring(5).CompareTo(startMd) >= 0 && 
+                                                     x.Birthday.Substring(5).CompareTo(endMd) <= 0);
+                        }
+                    }
+                    else
+                    {
+                        if (!startMd.IsNullOrWhiteSpace())
+                            query = query.Where(x => x.Birthday.Substring(5).CompareTo(startMd) >= 0);
+
+                        if (!endMd.IsNullOrWhiteSpace())
+                            query = query.Where(x => x.Birthday.Substring(5).CompareTo(endMd) <= 0);
+                    }
                 }
 
                 var totalCount = await AsyncExecuter.CountAsync(query);
