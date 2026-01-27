@@ -8,6 +8,7 @@ export const environment = {
     baseUrl,
     name: 'UCCP SBD Membership',
     logoUrl: 'assets/images/logo/logo-light.png',
+    logoReverseUrl: 'assets/images/logo/logo-light.png',
   },
   oAuthConfig: {
     issuer: 'https://localhost:44361/',

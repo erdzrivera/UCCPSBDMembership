@@ -11,17 +11,17 @@
 }
 
 :root {
-  --lpx-logo: url('assets/images/logo/uccp-text-logo.png') !important;
+  --lpx-logo: url('assets/images/logo/logo-light.png') !important;
   --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
 }
 
 html {
-  --lpx-logo: url('assets/images/logo/uccp-text-logo.png') !important;
+  --lpx-logo: url('assets/images/logo/logo-light.png') !important;
   --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
 }
 
 body {
-  --lpx-logo: url('assets/images/logo/uccp-text-logo.png') !important;
+  --lpx-logo: url('assets/images/logo/logo-light.png') !important;
   --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
 }
 
@@ -161,7 +161,7 @@ body.hide-navigation {
 
 .lpx-brand-logo {
   /* Directly set background image instead of using CSS variable */
-  background-image: url('assets/images/logo/uccp-text-logo.png') !important;
+  background-image: url('assets/images/logo/logo-light.png') !important;
   background-size: contain !important;
   /* Keep entire logo visible */
   background-position: left center !important;
