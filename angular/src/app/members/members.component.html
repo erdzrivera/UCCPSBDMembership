@@ -20,7 +20,7 @@
       <div class="col-12 col-md-4">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search members..." [(ngModel)]="searchText"
-            (keyup.enter)="list.get()">
+            (keyup)="list.get()">
           <button class="btn btn-outline-secondary" type="button" (click)="list.get()">
             <i class="fa fa-search"></i>
           </button>
