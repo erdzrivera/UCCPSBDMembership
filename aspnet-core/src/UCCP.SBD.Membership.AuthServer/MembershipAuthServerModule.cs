@@ -47,7 +47,8 @@ namespace UCCP.SBD.Membership;
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(MembershipEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(AbpCachingStackExchangeRedisModule)
     )]
 public class MembershipAuthServerModule : AbpModule
 {

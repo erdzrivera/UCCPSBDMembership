@@ -43,7 +43,8 @@ namespace UCCP.SBD.Membership;
     typeof(MembershipApplicationModule),
     typeof(MembershipEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(AbpCachingStackExchangeRedisModule)
 )]
 public class MembershipHttpApiHostModule : AbpModule
 {
