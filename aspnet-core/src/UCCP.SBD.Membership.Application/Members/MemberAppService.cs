@@ -12,10 +12,12 @@ namespace UCCP.SBD.Membership.Members
     public class MemberAppService : ApplicationService, IMemberAppService
     {
         private readonly IRepository<Member, Guid> _repository;
+        private readonly Microsoft.Extensions.Logging.ILogger<MemberAppService> _logger;
 
-        public MemberAppService(IRepository<Member, Guid> repository)
+        public MemberAppService(IRepository<Member, Guid> repository, Microsoft.Extensions.Logging.ILogger<MemberAppService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public async Task<MemberDto> GetAsync(Guid id)
@@ -26,45 +28,66 @@ namespace UCCP.SBD.Membership.Members
 
         public async Task<PagedResultDto<MemberDto>> GetListAsync(GetMembersInput input)
         {
-            var query = await _repository.GetQueryableAsync();
-            
-            if (!input.Filter.IsNullOrWhiteSpace())
+            try
             {
-                query = query.Where(x => x.FirstName.Contains(input.Filter) || 
-                                         x.LastName.Contains(input.Filter) || 
-                                         x.MiddleName.Contains(input.Filter));
+                var query = await _repository.GetQueryableAsync();
+                
+                if (!input.Filter.IsNullOrWhiteSpace())
+                {
+                    query = query.Where(x => x.FirstName.Contains(input.Filter) || 
+                                             x.LastName.Contains(input.Filter) || 
+                                             x.MiddleName.Contains(input.Filter));
+                }
+
+                var totalCount = await AsyncExecuter.CountAsync(query);
+
+                query = query.OrderBy(input.Sorting ?? nameof(Member.CreationTime))
+                             .PageBy(input);
+
+                var entities = await AsyncExecuter.ToListAsync(query);
+                
+                var dtos = new List<MemberDto>();
+                foreach (var item in entities)
+                {
+                    dtos.Add(MapToDto(item));
+                }
+                
+                return new PagedResultDto<MemberDto>(totalCount, dtos);
             }
-
-            var totalCount = await AsyncExecuter.CountAsync(query);
-
-            query = query.OrderBy(input.Sorting ?? nameof(Member.CreationTime))
-                         .PageBy(input);
-
-            var entities = await AsyncExecuter.ToListAsync(query);
-            
-            var dtos = new List<MemberDto>();
-            foreach (var item in entities)
+            catch (Exception ex)
             {
-                dtos.Add(MapToDto(item));
+                Logger.LogError(ex, "Error getting members list: {Message}", ex.Message);
+                throw; // Rethrow to let the user see the 500 error, but now we have logs
             }
-            
-            return new PagedResultDto<MemberDto>(totalCount, dtos);
         }
 
         public async Task<MemberDto> CreateAsync(CreateUpdateMemberDto input)
         {
-            var entity = ObjectMapper.Map<CreateUpdateMemberDto, Member>(input);
-            entity.PlaceOfBirth = input.PlaceOfBirth;
-            entity.FatherName = input.FatherName;
-            entity.MotherName = input.MotherName;
-            entity.Sponsors = input.Sponsors;
-            
-            entity.MemberTypeId = MapMemberTypeToId(input.MemberTypeId);
-            entity.OrganizationId = MapOrganizationToId(input.OrganizationId);
-            
-            await _repository.InsertAsync(entity);
-            
-            return MapToDto(entity);
+            try 
+            {
+                Logger.LogInformation("Creating member: {FirstName} {LastName}", input.FirstName, input.LastName);
+                
+                var entity = ObjectMapper.Map<CreateUpdateMemberDto, Member>(input);
+                entity.PlaceOfBirth = input.PlaceOfBirth;
+                entity.FatherName = input.FatherName;
+                entity.MotherName = input.MotherName;
+                entity.Sponsors = input.Sponsors;
+                
+                Logger.LogInformation("Mapping MemberType: {MemberTypeId}", input.MemberTypeId);
+                entity.MemberTypeId = MapMemberTypeToId(input.MemberTypeId);
+                
+                Logger.LogInformation("Mapping Organization: {OrganizationId}", input.OrganizationId);
+                entity.OrganizationId = MapOrganizationToId(input.OrganizationId);
+                
+                await _repository.InsertAsync(entity);
+                
+                return MapToDto(entity);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error creating member: {Message}", ex.Message);
+                throw;
+            }
         }
 
         public async Task<MemberDto> UpdateAsync(Guid id, CreateUpdateMemberDto input)
