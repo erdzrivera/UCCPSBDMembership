@@ -5,8 +5,8 @@ WORKDIR /src
 # Copy all source code
 COPY aspnet-core/ ./
 
-# Install ABP CLI and restore static assets
-RUN dotnet tool install -g Volo.Abp.Cli
+# Install ABP CLI and restore static assets (pinned to stable version)
+RUN dotnet tool install -g Volo.Abp.Cli --version 8.3.0
 ENV PATH="${PATH}:/root/.dotnet/tools"
 WORKDIR /src/src/UCCP.SBD.Membership.AuthServer
 RUN abp install-libs
