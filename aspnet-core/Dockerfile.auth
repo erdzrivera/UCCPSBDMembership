@@ -5,6 +5,13 @@ WORKDIR /src
 # Copy all source code
 COPY aspnet-core/ ./
 
+# Install ABP CLI and restore static assets
+RUN dotnet tool install -g Volo.Abp.Cli
+ENV PATH="${PATH}:/root/.dotnet/tools"
+WORKDIR /src/src/UCCP.SBD.Membership.AuthServer
+RUN abp install-libs
+WORKDIR /src
+
 # Restore and build only the Auth Server project
 RUN dotnet restore src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj
 RUN dotnet publish src/UCCP.SBD.Membership.AuthServer/UCCP.SBD.Membership.AuthServer.csproj -c Release -o /app/publish --no-restore

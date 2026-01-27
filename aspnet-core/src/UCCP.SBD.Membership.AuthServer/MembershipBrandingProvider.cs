@@ -16,4 +16,5 @@ public class MembershipBrandingProvider : DefaultBrandingProvider
     }
 
     public override string AppName => _localizer["AppName"];
+    public override string? LogoUrl => "/images/logo/logo-light.png";
 }
