@@ -40,6 +40,16 @@ namespace UCCP.SBD.Membership.Members
                                              x.MiddleName.Contains(input.Filter));
                 }
 
+                if (!input.BirthdayStart.IsNullOrWhiteSpace())
+                {
+                    query = query.Where(x => x.Birthday.CompareTo(input.BirthdayStart) >= 0);
+                }
+
+                if (!input.BirthdayEnd.IsNullOrWhiteSpace())
+                {
+                    query = query.Where(x => x.Birthday.CompareTo(input.BirthdayEnd) <= 0);
+                }
+
                 var totalCount = await AsyncExecuter.CountAsync(query);
 
                 query = query.OrderBy(input.Sorting ?? nameof(Member.CreationTime))

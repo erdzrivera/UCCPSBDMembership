@@ -17,13 +17,25 @@
   <div class="card-body">
     <!-- Search Input -->
     <div class="row mb-3">
-      <div class="col-12 col-md-6 col-lg-5">
+      <div class="col-12 col-md-4">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search members..." [(ngModel)]="searchText"
             (keyup.enter)="list.get()">
           <button class="btn btn-outline-secondary" type="button" (click)="list.get()">
             <i class="fa fa-search"></i>
           </button>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="input-group">
+          <span class="input-group-text">From</span>
+          <input type="date" class="form-control" [(ngModel)]="birthdayStart" (change)="list.get()">
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="input-group">
+          <span class="input-group-text">To</span>
+          <input type="date" class="form-control" [(ngModel)]="birthdayEnd" (change)="list.get()">
         </div>
       </div>
     </div>
@@ -35,6 +47,11 @@
       <ngx-datatable-column [name]="'::First Name' | abpLocalization" prop="firstName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Middle Name' | abpLocalization" prop="middleName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Last Name' | abpLocalization" prop="lastName"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Birthday' | abpLocalization" prop="birthday">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.birthday | date:'mediumDate' }}
+        </ng-template>
+      </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Organization' | abpLocalization" prop="organizationId">
         <ng-template let-row="row" ngx-datatable-cell-template>

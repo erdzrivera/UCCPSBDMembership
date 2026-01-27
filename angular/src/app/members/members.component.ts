@@ -17,6 +17,8 @@ export class MembersComponent implements OnInit {
   selectedMember = {} as MemberDto;
   isModalOpen = false;
   searchText = '';
+  birthdayStart = '';
+  birthdayEnd = '';
 
   constructor(
     public readonly list: ListService,
@@ -26,7 +28,12 @@ export class MembersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.list.hookToQuery(query => this.memberService.getList({ ...query, filter: this.searchText } as any)).subscribe(response => {
+    this.list.hookToQuery(query => this.memberService.getList({
+      ...query,
+      filter: this.searchText,
+      birthdayStart: this.birthdayStart,
+      birthdayEnd: this.birthdayEnd
+    } as any)).subscribe(response => {
       this.member = response;
     });
   }
