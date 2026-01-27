@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   application: {
     baseUrl,
-    name: 'Membership',
-    logoUrl: '/assets/images/logo/logo-text.png',
+    name: 'UCCP SBD Membership',
+    logoUrl: 'assets/images/logo/uccp-text-logo.png',
   },
   oAuthConfig: {
     issuer: 'https://localhost:44361/',
