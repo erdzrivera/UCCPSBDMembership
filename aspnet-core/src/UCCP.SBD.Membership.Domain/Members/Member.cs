@@ -6,7 +6,7 @@ namespace UCCP.SBD.Membership.Members
     public class Member : AuditedAggregateRoot<Guid>
     {
         public string FirstName { get; set; }
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
         public string LastName { get; set; }
         public string Birthday { get; set; }
         public string Occupation { get; set; }
@@ -28,7 +28,7 @@ namespace UCCP.SBD.Membership.Members
             Guid id, 
             string firstName, 
             string lastName, 
-            string middleName, 
+            string? middleName, 
             string birthday, 
             string occupation, 
             string baptismDate, 

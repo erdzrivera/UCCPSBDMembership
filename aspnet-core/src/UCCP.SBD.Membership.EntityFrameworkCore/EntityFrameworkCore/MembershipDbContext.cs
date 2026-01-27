@@ -75,7 +75,7 @@ public class MembershipDbContext :
             b.ConfigureByConvention();
 
             b.Property(x => x.FirstName).IsRequired().HasMaxLength(128);
-            b.Property(x => x.MiddleName).IsRequired().HasMaxLength(128);
+            b.Property(x => x.MiddleName).IsRequired(false).HasMaxLength(128);
             b.Property(x => x.LastName).IsRequired().HasMaxLength(128);
             b.Property(x => x.Birthday).IsRequired();
             b.Property(x => x.Occupation).IsRequired().HasMaxLength(256);
