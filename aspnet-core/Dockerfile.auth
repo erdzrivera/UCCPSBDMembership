@@ -5,6 +5,13 @@ WORKDIR /src
 # Copy all source code
 COPY aspnet-core/ ./
 
+# Install .NET 8.0 runtime (required by ABP CLI 8.3.0)
+RUN apt-get update && apt-get install -y wget && \
+    wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && \
+    chmod +x dotnet-install.sh && \
+    ./dotnet-install.sh --channel 8.0 --runtime dotnet --install-dir /usr/share/dotnet && \
+    rm dotnet-install.sh
+
 # Install ABP CLI and restore static assets (pinned to stable version)
 RUN dotnet tool install -g Volo.Abp.Cli --version 8.3.0
 ENV PATH="${PATH}:/root/.dotnet/tools"
