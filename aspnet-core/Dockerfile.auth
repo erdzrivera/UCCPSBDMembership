@@ -5,9 +5,14 @@ WORKDIR /src
 # Copy all source code
 COPY aspnet-core/ ./
 
+# Install Node.js and NPM (required by abp install-libs)
+RUN apt-get update && apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Install .NET 8.0 runtime (required by ABP CLI 8.3.0)
-RUN apt-get update && apt-get install -y wget && \
-    wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && \
+RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && \
     chmod +x dotnet-install.sh && \
     ./dotnet-install.sh --channel 8.0 --runtime dotnet --install-dir /usr/share/dotnet && \
     rm dotnet-install.sh
