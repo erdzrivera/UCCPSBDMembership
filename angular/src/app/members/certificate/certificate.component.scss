@@ -1,0 +1,184 @@
+/* Print Styles */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+
+    /* 
+     NUCLEAR OPTION: 
+     Hide EVERYTHING in the document body by default.
+  */
+    body * {
+        visibility: hidden !important;
+    }
+
+    /* 
+     Re-enable visibility specifically for the certificate container 
+     and its descendants. 
+  */
+    .certificate-container,
+    .certificate-container * {
+        visibility: visible !important;
+    }
+
+    /* 
+     Position the container fixed on the page.
+  */
+    .certificate-container {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+
+        /* Strict A4 Portrait Dimensions */
+        width: 210mm !important;
+        height: 296mm !important;
+
+        z-index: 2147483647 !important;
+        background: white !important;
+        margin: 0 !important;
+        padding: 15mm !important;
+
+        border: none !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+    }
+}
+
+/* Screen Styles */
+.certificate-container {
+    font-family: 'Times New Roman', Times, serif;
+    border: none;
+    padding: 40px;
+    background-color: #fff;
+    text-align: center;
+    margin: 30px auto;
+
+    /* Screen view */
+    width: 210mm;
+    min-height: 297mm;
+    max-width: 95%;
+
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.certificate-header {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.certificate-title {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: 'Great Vibes', 'Times New Roman', serif;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.certificate-subtitle {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.certificate-body {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    /* Slightly reduced line-height to save space for sponsors */
+    width: 100%;
+    max-width: 95%;
+}
+
+.certificate-name {
+    font-size: 2.2rem;
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+    display: block;
+    margin: 15px auto 30px auto;
+    width: 90%;
+    padding-bottom: 5px;
+}
+
+.certificate-details {
+    font-weight: bold;
+    border-bottom: 1px dotted #333;
+    padding: 0 10px;
+    display: inline-block;
+    min-width: 120px;
+}
+
+/* Sponsors Grid Styling */
+.sponsors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 30px;
+    /* row-gap col-gap */
+    width: 90%;
+    margin: 10px auto;
+}
+
+.sponsor-item {
+    font-size: 1.1rem;
+    font-weight: bold;
+    /* Optional: Add bottom border to each sponsor if desired, or keep clean */
+    /* border-bottom: 1px dotted #ccc; */
+}
+
+.certificate-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    /* Push to bottom if space permits, or fixed margin */
+    padding-top: 50px;
+}
+
+.signature-block {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signature-line {
+    border-top: 1px solid #333;
+    width: 250px;
+    padding-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.08;
+    width: 90%;
+    pointer-events: none;
+    z-index: 0;
+}

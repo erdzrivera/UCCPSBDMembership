@@ -12,6 +12,10 @@ namespace UCCP.SBD.Membership.Members
         public string Occupation { get; set; }
         public string BaptismDate { get; set; }
         public string BaptizedBy { get; set; }
+        public string PlaceOfBirth { get; set; }
+        public string FatherName { get; set; }
+        public string MotherName { get; set; }
+        public string Sponsors { get; set; }
         
         public string MemberTypeId { get; set; }
         public string OrganizationId { get; set; }
@@ -29,6 +33,10 @@ namespace UCCP.SBD.Membership.Members
             string occupation, 
             string baptismDate, 
             string baptizedBy, 
+            string placeOfBirth,
+            string fatherName,
+            string motherName,
+            string sponsors,
             string memberTypeId, 
             string organizationId, 
             bool isActive) 
@@ -41,6 +49,10 @@ namespace UCCP.SBD.Membership.Members
             Occupation = occupation;
             BaptismDate = baptismDate;
             BaptizedBy = baptizedBy;
+            PlaceOfBirth = placeOfBirth;
+            FatherName = fatherName;
+            MotherName = motherName;
+            Sponsors = sponsors;
             MemberTypeId = memberTypeId;
             OrganizationId = organizationId;
             IsActive = isActive;

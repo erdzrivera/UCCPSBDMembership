@@ -358,6 +358,7 @@ lpx-navbar nav {
 .btn-outline-primary {
   color: var(--lpx-primary) !important;
   border-color: var(--lpx-primary) !important;
+  color: var(--lpx-primary) !important;
 }
 
 .btn-outline-primary:hover {
@@ -391,4 +392,50 @@ a:hover {
 .form-control:focus {
   border-color: var(--lpx-primary) !important;
   box-shadow: 0 0 0 0.25rem rgba(82, 121, 111, 0.25) !important;
+}
+
+/* === RESTORE HIDE SYSTEM TITLES & STYLE CUSTOM ONES === */
+
+/* 1. HIDE the default LeptonX/ABP page titles & BREADCRUMBS. This addresses the 'remove duplicate' request. */
+body .lpx-content-title,
+body .lpx-page-title,
+body .abp-page-title,
+body .page-header h1,
+body .lpx-breadcrumb,
+/* Hide the breadcrumb/small label at top */
+body .breadcrumb {
+  display: none !important;
+}
+
+/* 2. STYLE our new .custom-page-title class */
+.custom-page-title {
+  font-size: 1.25rem !important;
+  /* Smaller text */
+  font-weight: 700 !important;
+  color: var(--lpx-brand) !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 1rem !important;
+  padding-left: 0 !important;
+  padding-bottom: 0 !important;
+  /* Removed padding */
+  border-bottom: none !important;
+  /* Removed Rustic Underline */
+  display: flex !important;
+  align-items: center !important;
+  width: 100%;
+}
+
+/* 3. Style the ICON inside the custom title */
+.custom-page-title i {
+  font-size: 1.1rem !important;
+  /* Smaller icon to match text */
+  color: var(--lpx-primary) !important;
+  margin-right: 10px !important;
+  background-color: transparent !important;
+  /* Removed box background? User didn't ask but "icon as well" suggests minimal. Keeping box but ensuring it scales. */
+  background-color: #f5f5f4;
+  /* Stone 100 */
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }

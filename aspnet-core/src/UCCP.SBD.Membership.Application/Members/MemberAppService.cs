@@ -24,10 +24,17 @@ namespace UCCP.SBD.Membership.Members
             return MapToDto(entity);
         }
 
-        public async Task<PagedResultDto<MemberDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        public async Task<PagedResultDto<MemberDto>> GetListAsync(GetMembersInput input)
         {
             var query = await _repository.GetQueryableAsync();
             
+            if (!input.Filter.IsNullOrWhiteSpace())
+            {
+                query = query.Where(x => x.FirstName.Contains(input.Filter) || 
+                                         x.LastName.Contains(input.Filter) || 
+                                         x.MiddleName.Contains(input.Filter));
+            }
+
             var totalCount = await AsyncExecuter.CountAsync(query);
 
             query = query.OrderBy(input.Sorting ?? nameof(Member.CreationTime))
@@ -47,6 +54,10 @@ namespace UCCP.SBD.Membership.Members
         public async Task<MemberDto> CreateAsync(CreateUpdateMemberDto input)
         {
             var entity = ObjectMapper.Map<CreateUpdateMemberDto, Member>(input);
+            entity.PlaceOfBirth = input.PlaceOfBirth;
+            entity.FatherName = input.FatherName;
+            entity.MotherName = input.MotherName;
+            entity.Sponsors = input.Sponsors;
             
             entity.MemberTypeId = MapMemberTypeToId(input.MemberTypeId);
             entity.OrganizationId = MapOrganizationToId(input.OrganizationId);
@@ -61,6 +72,10 @@ namespace UCCP.SBD.Membership.Members
             var entity = await _repository.GetAsync(id);
             
             ObjectMapper.Map(input, entity);
+            entity.PlaceOfBirth = input.PlaceOfBirth;
+            entity.FatherName = input.FatherName;
+            entity.MotherName = input.MotherName;
+            entity.Sponsors = input.Sponsors;
             
             entity.MemberTypeId = MapMemberTypeToId(input.MemberTypeId);
             entity.OrganizationId = MapOrganizationToId(input.OrganizationId);
@@ -78,6 +93,10 @@ namespace UCCP.SBD.Membership.Members
         private MemberDto MapToDto(Member entity)
         {
             var dto = ObjectMapper.Map<Member, MemberDto>(entity);
+            dto.PlaceOfBirth = entity.PlaceOfBirth;
+            dto.FatherName = entity.FatherName;
+            dto.MotherName = entity.MotherName;
+            dto.Sponsors = entity.Sponsors;
             dto.MemberTypeId = MapIdToMemberType(entity.MemberTypeId);
             dto.OrganizationId = MapIdToOrganization(entity.OrganizationId);
             return dto;

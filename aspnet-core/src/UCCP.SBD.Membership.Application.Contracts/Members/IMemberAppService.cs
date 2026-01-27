@@ -8,7 +8,7 @@ namespace UCCP.SBD.Membership.Members
     public interface IMemberAppService : IApplicationService
     {
         Task<MemberDto> GetAsync(Guid id);
-        Task<PagedResultDto<MemberDto>> GetListAsync(PagedAndSortedResultRequestDto input);
+        Task<PagedResultDto<MemberDto>> GetListAsync(GetMembersInput input);
         Task<MemberDto> CreateAsync(CreateUpdateMemberDto input);
         Task<MemberDto> UpdateAsync(Guid id, CreateUpdateMemberDto input);
         Task DeleteAsync(Guid id);

@@ -16,6 +16,10 @@ namespace UCCP.SBD.Membership.Members
         public string Occupation { get; set; }
         public string BaptismDate { get; set; }
         public string BaptizedBy { get; set; }
+        public string PlaceOfBirth { get; set; }
+        public string FatherName { get; set; }
+        public string MotherName { get; set; }
+        public string Sponsors { get; set; }
         
         public string MemberTypeId { get; set; }
         public string OrganizationId { get; set; }

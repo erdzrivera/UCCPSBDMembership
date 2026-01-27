@@ -1,8 +1,8 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Component, OnInit } from '@angular/core';
-import { MemberService, MemberDto, CreateUpdateMemberDto, MembershipTypeService, OrganizationService, MembershipTypeDto, OrganizationDto } from '../proxy/members';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MemberService, MemberDto } from '../proxy/members';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-members',
@@ -15,81 +15,36 @@ export class MembersComponent implements OnInit {
   member = { items: [], totalCount: 0 } as PagedResultDto<MemberDto>;
 
   selectedMember = {} as MemberDto;
-  form: FormGroup;
   isModalOpen = false;
-
-  membershipTypes: MembershipTypeDto[] = [];
-  organizations: OrganizationDto[] = [];
+  searchText = '';
 
   constructor(
     public readonly list: ListService,
     private memberService: MemberService,
-    private membershipTypeService: MembershipTypeService,
-    private organizationService: OrganizationService,
-    private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.list.hookToQuery(query => this.memberService.getList(query)).subscribe(response => {
+    this.list.hookToQuery(query => this.memberService.getList({ ...query, filter: this.searchText } as any)).subscribe(response => {
       this.member = response;
     });
-
-    this.getDropdownLists();
   }
 
-  getDropdownLists() {
-    this.membershipTypeService.getList({} as any).subscribe(res => {
-      this.membershipTypes = res.items;
-    });
-    this.organizationService.getList({} as any).subscribe(res => {
-      this.organizations = res.items;
-    });
+  onActivate(event) {
+    if (event.type === 'click' && event.column.prop !== undefined) {
+      this.router.navigate(['/members', event.row.id]);
+    }
   }
 
   createMember() {
     this.selectedMember = {} as MemberDto;
-    this.buildForm();
     this.isModalOpen = true;
   }
 
   editMember(id: string) {
-    this.memberService.get(id).subscribe(member => {
-      this.selectedMember = member;
-      this.buildForm();
-      this.isModalOpen = true;
-    });
-  }
-
-  buildForm() {
-    this.form = this.fb.group({
-      firstName: [this.selectedMember.firstName || '', Validators.required],
-      middleName: [this.selectedMember.middleName || ''],
-      lastName: [this.selectedMember.lastName || '', Validators.required],
-      birthday: [this.selectedMember.birthday || null],
-      occupation: [this.selectedMember.occupation || ''],
-      baptismDate: [this.selectedMember.baptismDate || null],
-      baptizedBy: [this.selectedMember.baptizedBy || ''],
-      memberTypeId: [this.selectedMember.memberTypeId || null],
-      organizationId: [this.selectedMember.organizationId || null],
-      isActive: [this.selectedMember.isActive === false ? false : true]
-    });
-  }
-
-  save() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    const request = this.selectedMember.id
-      ? this.memberService.update(this.selectedMember.id, this.form.value)
-      : this.memberService.create(this.form.value);
-
-    request.subscribe(() => {
-      this.isModalOpen = false;
-      this.form.reset();
-      this.list.get();
-    });
+    this.selectedMember = { id } as MemberDto;
+    this.isModalOpen = true;
   }
 
   delete(id: string) {
@@ -98,5 +53,9 @@ export class MembersComponent implements OnInit {
         this.memberService.delete(id).subscribe(() => this.list.get());
       }
     });
+  }
+
+  onSaved() {
+    this.list.get();
   }
 }

@@ -1,0 +1,143 @@
+<abp-modal [(visible)]="visible" (visibleChange)="close()" [options]="{size: 'xl'}">
+    <ng-template #abpHeader>
+        <h3>{{ (memberId ? '::Edit' : '::New Member') | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form [formGroup]="form" (ngSubmit)="save()" *ngIf="form">
+            <div class="row">
+                <!-- LEFT COLUMN: Personal & Baptismal -->
+                <div class="col-lg-6 border-end pe-4">
+                    <h5 class="text-primary border-bottom pb-2 mb-3">Personal Information</h5>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="firstName">First Name</label><span> * </span>
+                                <input type="text" id="firstName" class="form-control" formControlName="firstName" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="middleName">Middle Name</label>
+                                <input type="text" id="middleName" class="form-control" formControlName="middleName" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="lastName">Last Name</label><span> * </span>
+                                <input type="text" id="lastName" class="form-control" formControlName="lastName" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="birthday">Birthday</label>
+                                <input type="date" id="birthday" class="form-control" formControlName="birthday" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="placeOfBirth">Place of Birth</label>
+                                <input type="text" id="placeOfBirth" class="form-control"
+                                    formControlName="placeOfBirth" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="occupation">Occupation</label>
+                        <input type="text" id="occupation" class="form-control" formControlName="occupation" />
+                    </div>
+
+                    <h5 class="text-primary border-bottom pb-2 mt-4 mb-3">Baptismal Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="baptismDate">Baptism Date</label>
+                                <input type="date" id="baptismDate" class="form-control"
+                                    formControlName="baptismDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="baptizedBy">Baptized By</label>
+                                <input type="text" id="baptizedBy" class="form-control" formControlName="baptizedBy" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Family & Church -->
+                <div class="col-lg-6 ps-4">
+                    <h5 class="text-primary border-bottom pb-2 mb-3">Family Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="fatherName">Father's Name</label>
+                                <input type="text" id="fatherName" class="form-control" formControlName="fatherName" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="motherName">Mother's Name</label>
+                                <input type="text" id="motherName" class="form-control" formControlName="motherName" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="text-primary border-bottom pb-2 mt-4 mb-3">Church Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="organizationId">Organization</label>
+                                <select class="form-control" id="organizationId" formControlName="organizationId">
+                                    <option [ngValue]="null">Select Organization</option>
+                                    <option *ngFor="let org of organizations" [ngValue]="org.abbreviation">
+                                        {{ org.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="memberTypeId">Member Type</label>
+                                <select class="form-control" id="memberTypeId" formControlName="memberTypeId">
+                                    <option [ngValue]="null">Select Member Type</option>
+                                    <option *ngFor="let type of membershipTypes" [ngValue]="type.name">
+                                        {{ type.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="sponsors">Sponsors</label>
+                        <textarea id="sponsors" class="form-control" formControlName="sponsors" rows="4"
+                            placeholder="Enter sponsors (one per line or comma separated)"></textarea>
+                    </div>
+
+                    <div class="form-check mt-3 text-end">
+                        <label class="form-check-label user-select-none fw-bold text-secondary">
+                            <input type="checkbox" class="form-check-input" formControlName="isActive" />
+                            <span>{{ '::IsActive' | abpLocalization }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #abpFooter>
+        <button type="button" class="btn btn-secondary" (click)="close()">
+            {{ '::Cancel' | abpLocalization }}
+        </button>
+        <button class="btn btn-primary" (click)="save()" [disabled]="form?.invalid">
+            <i class="fa fa-check me-1"></i>
+            {{ '::Save' | abpLocalization }}
+        </button>
+    </ng-template>
+</abp-modal>

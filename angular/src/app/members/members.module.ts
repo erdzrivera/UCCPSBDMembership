@@ -4,10 +4,16 @@ import { SharedModule } from '../shared/shared.module';
 
 import { MembersRoutingModule } from './members-routing.module';
 import { MembersComponent } from './members.component';
+import { ViewMemberComponent } from './view-member/view-member.component';
+import { MemberModalComponent } from './member-modal/member-modal.component';
+import { CertificateComponent } from './certificate/certificate.component';
 
 @NgModule({
   declarations: [
-    MembersComponent
+    MembersComponent,
+    ViewMemberComponent,
+    MemberModalComponent,
+    CertificateComponent
   ],
   imports: [
     CommonModule,

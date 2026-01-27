@@ -9,6 +9,10 @@ export interface MemberDto {
   occupation?: string;
   baptismDate?: string;
   baptizedBy?: string;
+  placeOfBirth?: string;
+  fatherName?: string;
+  motherName?: string;
+  sponsors?: string;
   memberTypeId?: string;
   organizationId?: string;
   isActive: boolean;

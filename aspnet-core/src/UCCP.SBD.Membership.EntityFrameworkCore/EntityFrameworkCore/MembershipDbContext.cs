@@ -83,6 +83,10 @@ public class MembershipDbContext :
             b.Property(x => x.BaptizedBy).IsRequired().HasMaxLength(256);
             b.Property(x => x.MemberTypeId).IsRequired();
             b.Property(x => x.OrganizationId).IsRequired();
+            b.Property(x => x.PlaceOfBirth).IsRequired(false);
+            b.Property(x => x.FatherName).IsRequired(false);
+            b.Property(x => x.MotherName).IsRequired(false);
+            b.Property(x => x.Sponsors).IsRequired(false);
 
             b.HasIndex(x => x.LastName);
         });

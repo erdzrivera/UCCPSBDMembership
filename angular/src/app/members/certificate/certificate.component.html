@@ -1,0 +1,63 @@
+<div class="row no-print mb-3">
+    <div class="col-12 text-end">
+        <button class="btn btn-primary" (click)="print()">
+            <i class="fa fa-print me-1"></i> Print Certificate
+        </button>
+        <a routerLink="/members/{{member?.id}}" class="btn btn-secondary ms-2">
+            <i class="fa fa-arrow-left me-1"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="certificate-container" *ngIf="member">
+    <!-- <img src="assets/images/logo.png" alt="Watermark" class="watermark">  Add logo later -->
+
+    <div class="certificate-header">
+        <img src="assets/images/logo/uccp-logo.png" alt="UCCP Logo" class="logo">
+        <h1 class="certificate-title">Certificate of Baptism</h1>
+        <h3 class="certificate-subtitle">This certifies that</h3>
+    </div>
+
+    <div class="certificate-body">
+        <div class="certificate-name">
+            {{ member.firstName }} {{ member.middleName }} {{ member.lastName }}
+        </div>
+        <br><br>
+
+        <p>
+            Child of <span class="certificate-details">{{ member.fatherName || '________________' }}</span>
+            and <span class="certificate-details">{{ member.motherName || '________________' }}</span>
+        </p>
+
+        <p>
+            Born in <span class="certificate-details">{{ member.placeOfBirth || '________________' }}</span>
+            on <span class="certificate-details">{{ member.birthday | date:'longDate' }}</span>
+        </p>
+
+        <p>
+            Was Baptized on <span class="certificate-details">{{ member.baptismDate | date:'longDate' }}</span>
+        </p>
+
+        <p>
+            In the Name of the Father, and of the Son, and of the Holy Spirit.
+        </p>
+
+        <p *ngIf="member.baptizedBy">
+            By <span class="certificate-details">{{ member.baptizedBy }}</span>
+        </p>
+
+        <div class="mt-4" *ngIf="member.sponsors">
+            <p><strong>Sponsors:</strong></p>
+            <div class="sponsors-grid">
+                <span *ngFor="let sponsor of sponsorsList" class="sponsor-item">{{ sponsor }}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="certificate-footer">
+        <div class="signature-block">
+            <div class="signature-line">Pastor / Officiating Minister</div>
+        </div>
+    </div>
+</div>
