@@ -130,6 +130,7 @@ public class MembershipAuthServerModule : AbpModule
             options.StyleBundles.Configure(LeptonXLiteThemeBundles.Styles.Global, bundle =>
             {
                 bundle.AddFiles("/global-styles.css");
+                bundle.AddFiles("/site.css");
             });
         });
 
