@@ -15,7 +15,7 @@ services:
       - key: ConnectionStrings__Default
         sync: false
       - key: Redis__Configuration
-        sync: false
+        value: redis-10168.c252.ap-southeast-1-1.ec2.cloud.redislabs.com:10168,password=yvUTlrTajPq0VXZVjdKwxKhC7rl2Ldok,ssl=False,abortConnect=False
       - key: AuthServer__Authority
         sync: false
       - key: App__CorsOrigins
@@ -41,7 +41,7 @@ services:
       - key: ConnectionStrings__Default
         sync: false
       - key: Redis__Configuration
-        sync: false
+        value: redis-10168.c252.ap-southeast-1-1.ec2.cloud.redislabs.com:10168,password=yvUTlrTajPq0VXZVjdKwxKhC7rl2Ldok,ssl=False,abortConnect=False
       - key: App__SelfUrl
         sync: false
       - key: App__ClientUrl
