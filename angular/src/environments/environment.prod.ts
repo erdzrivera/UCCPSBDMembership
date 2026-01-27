@@ -7,7 +7,7 @@ export const environment = {
   application: {
     baseUrl,
     name: 'Membership',
-    logoUrl: '/UCCPSBDMembership/assets/images/logo/logo-text.png',
+    logoUrl: '/UCCPSBDMembership/assets/images/logo/uccp-text-logo.png',
   },
   oAuthConfig: {
     issuer: 'https://uccp-membership-auth.onrender.com/',

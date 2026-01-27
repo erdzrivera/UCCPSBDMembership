@@ -11,18 +11,18 @@
 }
 
 :root {
-  --lpx-logo: url('/assets/images/logo/uccp-text-logo.png') !important;
-  --lpx-logo-icon: url('/assets/images/logo/uccp-logo.png') !important;
+  --lpx-logo: url('assets/images/logo/uccp-text-logo.png') !important;
+  --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
 }
 
 html {
-  --lpx-logo: url('/assets/images/logo/uccp-text-logo.png') !important;
-  --lpx-logo-icon: url('/assets/images/logo/uccp-logo.png') !important;
+  --lpx-logo: url('assets/images/logo/uccp-text-logo.png') !important;
+  --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
 }
 
 body {
-  --lpx-logo: url('/assets/images/logo/uccp-text-logo.png') !important;
-  --lpx-logo-icon: url('/assets/images/logo/uccp-logo.png') !important;
+  --lpx-logo: url('assets/images/logo/uccp-text-logo.png') !important;
+  --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
 }
 
 
@@ -50,25 +50,25 @@ body {
 .abp-support {
   width: 178px;
   height: 30px;
-  background-image: url('/assets/images/getting-started/abp-support.svg');
+  background-image: url('assets/images/getting-started/abp-support.svg');
 }
 
 .abp-community {
   width: 215px;
   height: 30px;
-  background-image: url('/assets/images/getting-started/abp-community.svg');
+  background-image: url('assets/images/getting-started/abp-community.svg');
 }
 
 .abp-blog {
   width: 142px;
   height: 30px;
-  background-image: url('/assets/images/getting-started/abp-blog.svg');
+  background-image: url('assets/images/getting-started/abp-blog.svg');
 }
 
 .logo-x {
   width: 20px;
   height: 20px;
-  background-image: url('/assets/images/getting-started/x.svg');
+  background-image: url('assets/images/getting-started/x.svg');
 }
 
 // Hide navigation when on login page
@@ -131,7 +131,7 @@ body.hide-navigation {
 
   /* Ensure the expanded logo text/image is hidden/swapped */
   .lpx-sidebar-container:hover .lpx-brand-logo {
-    background-image: url('/assets/images/logo/uccp-logo.png') !important;
+    background-image: url('assets/images/logo/uccp-logo.png') !important;
     background-size: 40px !important;
     width: 100% !important;
     height: 100% !important;
@@ -161,7 +161,7 @@ body.hide-navigation {
 
 .lpx-brand-logo {
   /* Directly set background image instead of using CSS variable */
-  background-image: url('/assets/images/logo/uccp-text-logo.png') !important;
+  background-image: url('assets/images/logo/uccp-text-logo.png') !important;
   background-size: contain !important;
   /* Keep entire logo visible */
   background-position: left center !important;
@@ -200,7 +200,7 @@ body.lpx-sidebar-closed .lpx-logo-container,
 body.lpx-sidebar-closed .lpx-brand-logo,
 #lpx-wrapper.initial-hover .lpx-brand-logo,
 #lpx-wrapper.hover-trigger .lpx-brand-logo {
-  background-image: url('/assets/images/logo/uccp-logo.png') !important;
+  background-image: url('assets/images/logo/uccp-logo.png') !important;
   background-size: 40px 40px !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
