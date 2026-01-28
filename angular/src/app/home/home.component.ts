@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
-  standalone: false,
+
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  standalone: false
 })
 export class HomeComponent {
   private authService = inject(AuthService);

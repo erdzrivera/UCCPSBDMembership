@@ -39,6 +39,29 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
         requiredPolicy: 'Membership.MembershipTypes',
       },
+      {
+        path: '/identity/users',
+        name: '::Users',
+        parentName: 'AbpUiNavigation::Menu:Administration',
+        iconClass: 'fas fa-user',
+        layout: eLayoutType.application,
+        requiredPolicy: 'AbpIdentity.Users',
+      },
+      {
+        path: '/identity/roles',
+        name: '::Roles',
+        parentName: 'AbpUiNavigation::Menu:Administration',
+        iconClass: 'fas fa-lock',
+        layout: eLayoutType.application,
+        requiredPolicy: 'AbpIdentity.Roles',
+      },
+    ]);
+
+    // Remove the default Settings and Tenant menu items
+    routesService.remove([
+      'AbpSettingManagement::Settings',
+      'Settings',
+      'AbpTenantManagement::Tenants'
     ]);
   };
 }

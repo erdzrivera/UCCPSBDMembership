@@ -1,12 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@abp/ng.core';
+import { ItemPermissionGuard } from './guards/item-permission.guard';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+  },
+  {
+    path: 'account/manage',
+    component: MyProfileComponent,
+    canActivate: [AuthGuard],
+    title: 'My Profile'
+  },
+  {
+    path: 'account/manage-profile',
+    component: MyProfileComponent,
+    canActivate: [AuthGuard],
+    title: 'My Profile'
   },
   {
     path: 'account',
@@ -18,20 +33,27 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'tenant-management',
-    loadChildren: () =>
-      import('@abp/ng.tenant-management').then(m => m.TenantManagementModule.forLazy()),
-    canActivate: [AuthGuard]
+    path: 'access-denied',
+    component: AccessDeniedComponent
   },
   {
-    path: 'setting-management',
-    loadChildren: () =>
-      import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
-    canActivate: [AuthGuard]
+    path: 'members',
+    loadChildren: () => import('./members/members.module').then(m => m.MembersModule),
+    canActivate: [AuthGuard, ItemPermissionGuard],
+    data: { requiredPolicy: 'Membership.Members' }
   },
-  { path: 'members', loadChildren: () => import('./members/members.module').then(m => m.MembersModule), canActivate: [AuthGuard] },
-  { path: 'organizations', loadChildren: () => import('./organizations/organizations.module').then(m => m.OrganizationsModule), canActivate: [AuthGuard] },
-  { path: 'membership-types', loadChildren: () => import('./membership-types/membership-types.module').then(m => m.MembershipTypesModule), canActivate: [AuthGuard] },
+  {
+    path: 'organizations',
+    loadChildren: () => import('./organizations/organizations.module').then(m => m.OrganizationsModule),
+    canActivate: [AuthGuard, ItemPermissionGuard],
+    data: { requiredPolicy: 'Membership.Organizations' }
+  },
+  {
+    path: 'membership-types',
+    loadChildren: () => import('./membership-types/membership-types.module').then(m => m.MembershipTypesModule),
+    canActivate: [AuthGuard, ItemPermissionGuard],
+    data: { requiredPolicy: 'Membership.MembershipTypes' }
+  },
 ];
 
 @NgModule({

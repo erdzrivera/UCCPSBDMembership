@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MemberService, MemberDto, MembershipTypeService, OrganizationService, MembershipTypeDto, OrganizationDto, CreateUpdateMemberDto } from '@proxy/members';
 
@@ -7,7 +7,7 @@ import { MemberService, MemberDto, MembershipTypeService, OrganizationService, M
     templateUrl: './member-modal.component.html',
     standalone: false
 })
-export class MemberModalComponent implements OnInit {
+export class MemberModalComponent implements OnInit, OnChanges {
     @Input() visible = false;
     @Output() visibleChange = new EventEmitter<boolean>();
 
@@ -17,6 +17,7 @@ export class MemberModalComponent implements OnInit {
     form: FormGroup;
     membershipTypes: MembershipTypeDto[] = [];
     organizations: OrganizationDto[] = [];
+    activeTab = 'personal';
 
     constructor(
         private fb: FormBuilder,
@@ -31,6 +32,7 @@ export class MemberModalComponent implements OnInit {
 
     ngOnChanges(): void {
         if (this.visible) {
+            this.activeTab = 'personal';
             if (this.memberId) {
                 this.memberService.get(this.memberId).subscribe(member => {
                     this.buildForm(member);
@@ -55,12 +57,12 @@ export class MemberModalComponent implements OnInit {
             firstName: [selectedMember.firstName || '', Validators.required],
             middleName: [selectedMember.middleName || ''],
             lastName: [selectedMember.lastName || '', Validators.required],
-            birthday: [selectedMember.birthday || null],
+            birthday: [selectedMember.birthday || null, Validators.required],
             occupation: [selectedMember.occupation || ''],
             baptismDate: [selectedMember.baptismDate || null],
             baptizedBy: [selectedMember.baptizedBy || ''],
-            memberTypeId: [selectedMember.memberTypeId || null],
-            organizationId: [selectedMember.organizationId || null],
+            memberTypeId: [selectedMember.memberTypeId || null, Validators.required],
+            organizationId: [selectedMember.organizationId || null, Validators.required],
             placeOfBirth: [selectedMember.placeOfBirth || ''],
             fatherName: [selectedMember.fatherName || ''],
             motherName: [selectedMember.motherName || ''],
