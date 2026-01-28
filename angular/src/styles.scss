@@ -12,7 +12,7 @@
 
 :root {
   --lpx-logo: url('assets/images/logo/logo-light.png') !important;
-  --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
+  --lpx-logo-icon: url('assets/images/logo/uccp-logo.jpg') !important;
 
   /* Modern Rustic Palette (Stone/Sage) */
   --lpx-brand: #44403c !important;
@@ -57,7 +57,7 @@
 
 html {
   --lpx-logo: url('assets/images/logo/logo-light.png') !important;
-  --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
+  --lpx-logo-icon: url('assets/images/logo/uccp-logo.jpg') !important;
 
   /* Modern Rustic Palette (Stone/Sage) */
   --lpx-brand: #44403c !important;
@@ -72,7 +72,7 @@ html {
 
 body {
   --lpx-logo: url('assets/images/logo/logo-light.png') !important;
-  --lpx-logo-icon: url('assets/images/logo/uccp-logo.png') !important;
+  --lpx-logo-icon: url('assets/images/logo/uccp-logo.jpg') !important;
 
   /* Modern Rustic Palette (Stone/Sage) */
   --lpx-brand: #44403c !important;
@@ -191,7 +191,7 @@ body.hide-navigation {
 
   /* Ensure the expanded logo text/image is hidden/swapped */
   .lpx-sidebar-container:hover .lpx-brand-logo {
-    background-image: url('assets/images/logo/uccp-logo.png') !important;
+    background-image: url('assets/images/logo/uccp-logo.jpg') !important;
     background-size: 40px !important;
     width: 100% !important;
     height: 100% !important;
@@ -260,7 +260,7 @@ body.lpx-sidebar-closed .lpx-logo-container,
 body.lpx-sidebar-closed .lpx-brand-logo,
 #lpx-wrapper.initial-hover .lpx-brand-logo,
 #lpx-wrapper.hover-trigger .lpx-brand-logo {
-  background-image: url('assets/images/logo/uccp-logo.png') !important;
+  background-image: url('assets/images/logo/uccp-logo.jpg') !important;
   background-size: 32px 32px !important;
   /* Square icon */
   background-position: center center !important;
