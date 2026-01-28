@@ -203,12 +203,13 @@ body.hide-navigation {
 }
 
 /* EXPANDED STATE (Default) */
+/* EXPANDED STATE (Default) */
+/* EXPANDED STATE (Default) */
 .lpx-logo-container {
-  height: 60px !important;
-  max-height: 60px !important;
-  padding: 0 !important;
+  height: 72px !important;
+  max-height: 72px !important;
+  padding: 0 16px !important;
   margin: 0 !important;
-  /* Remove top margin to prevent scrollbar */
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
@@ -216,28 +217,25 @@ body.hide-navigation {
   z-index: 1000 !important;
   background: transparent !important;
   overflow: visible !important;
-  transition: height 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .lpx-brand-logo {
-  /* Directly set background image instead of using CSS variable */
+  /* Default Expanded Asset */
   background-image: url('assets/images/logo/logo-light.png') !important;
   background-size: contain !important;
-  /* Keep entire logo visible */
   background-position: left center !important;
   background-repeat: no-repeat !important;
-  width: 200px !important;
-  /* Reduced width to show complete logo */
-  height: 100% !important;
-  min-height: 40px !important;
-  margin-left: 25px !important;
-  /* Move logo to the right */
+
   display: block !important;
+  width: 200px !important;
+  height: 48px !important;
+  margin: 0 !important;
+
   position: relative !important;
-  z-index: 100 !important;
-  /* Lower z-index so toggle button is accessible */
+  z-index: 1001 !important;
   pointer-events: none !important;
-  /* Allow clicks to pass through to toggle button */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Hide the default img tag since we're using background-image */
@@ -245,14 +243,16 @@ body.hide-navigation {
   display: none !important;
 }
 
+/* COLLAPSED STATE overrides 
+   Using higher specificity due to !important usage in base class 
+   (though !important vs !important is usually decided by selector specificity/order) 
+*/
 .lpx-sidebar-collapsed .lpx-logo-container,
 body.lpx-sidebar-closed .lpx-logo-container,
 #lpx-wrapper.initial-hover .lpx-logo-container,
 #lpx-wrapper.hover-trigger .lpx-logo-container {
-  height: 60px !important;
+  height: 72px !important;
   padding: 0 !important;
-  margin: 0 !important;
-  /* Match expanded state */
   justify-content: center !important;
 }
 
@@ -261,13 +261,11 @@ body.lpx-sidebar-closed .lpx-brand-logo,
 #lpx-wrapper.initial-hover .lpx-brand-logo,
 #lpx-wrapper.hover-trigger .lpx-brand-logo {
   background-image: url('assets/images/logo/uccp-logo.png') !important;
-  background-size: 40px 40px !important;
+  background-size: 32px 32px !important;
+  /* Square icon */
   background-position: center center !important;
-  background-repeat: no-repeat !important;
   width: 60px !important;
   height: 60px !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
 }
 
 /* Remove nav top padding to align logo with Home/Admin */

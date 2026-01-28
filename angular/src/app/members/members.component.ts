@@ -28,12 +28,17 @@ export class MembersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.list.hookToQuery(query => this.memberService.getList({
-      ...query,
-      filter: this.searchText,
-      birthdayStart: this.birthdayStart,
-      birthdayEnd: this.birthdayEnd
-    } as any)).subscribe(response => {
+    this.list.hookToQuery(query => {
+      if (!query.sorting) {
+        query.sorting = 'lastName ASC';
+      }
+      return this.memberService.getList({
+        ...query,
+        filter: this.searchText,
+        birthdayStart: this.birthdayStart,
+        birthdayEnd: this.birthdayEnd
+      } as any);
+    }).subscribe(response => {
       this.member = response;
     });
   }

@@ -25,7 +25,12 @@ export class MembershipTypesComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        const membershipTypeStreamCreator = (query) => this.membershipTypeService.getList(query);
+        const membershipTypeStreamCreator = (query) => {
+            if (!query.sorting) {
+                query.sorting = 'id ASC';
+            }
+            return this.membershipTypeService.getList(query);
+        };
 
         this.list.hookToQuery(membershipTypeStreamCreator).subscribe((response) => {
             this.membershipType = response;
