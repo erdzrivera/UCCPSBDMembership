@@ -16,11 +16,16 @@ namespace UCCP.SBD.Membership.Members;
 public class MemberAppService : ApplicationService, IMemberAppService
     {
         private readonly IRepository<Member, Guid> _repository;
+        private readonly IRepository<MembershipType, string> _membershipTypeRepository;
         private readonly Microsoft.Extensions.Logging.ILogger<MemberAppService> _logger;
 
-        public MemberAppService(IRepository<Member, Guid> repository, Microsoft.Extensions.Logging.ILogger<MemberAppService> logger)
+        public MemberAppService(
+            IRepository<Member, Guid> repository, 
+            IRepository<MembershipType, string> membershipTypeRepository,
+            Microsoft.Extensions.Logging.ILogger<MemberAppService> logger)
         {
             _repository = repository;
+            _membershipTypeRepository = membershipTypeRepository;
             _logger = logger;
         }
 
@@ -82,8 +87,33 @@ public class MemberAppService : ApplicationService, IMemberAppService
 
                 var totalCount = await AsyncExecuter.CountAsync(query);
 
-                query = query.OrderBy(input.Sorting ?? nameof(Member.CreationTime))
-                             .PageBy(input);
+                if (input.Sorting?.Contains("memberTypeId", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    var isDesc = input.Sorting.Contains("desc", StringComparison.OrdinalIgnoreCase);
+                    var membershipTypes = await _membershipTypeRepository.GetQueryableAsync();
+
+                    var joinedQuery = from member in query
+                                      join type in membershipTypes on member.MemberTypeId equals type.Id
+                                      select new { Member = member, TypeName = type.Name };
+
+                    if (isDesc)
+                    {
+                        joinedQuery = joinedQuery.OrderByDescending(x => x.TypeName);
+                    }
+                    else
+                    {
+                        joinedQuery = joinedQuery.OrderBy(x => x.TypeName);
+                    }
+
+                    // Select back the member and apply paging
+                    query = joinedQuery.Select(x => x.Member);
+                    query = query.PageBy(input);
+                }
+                else
+                {
+                    query = query.OrderBy(input.Sorting ?? nameof(Member.CreationTime))
+                                 .PageBy(input);
+                }
 
                 var entities = await AsyncExecuter.ToListAsync(query);
                 
