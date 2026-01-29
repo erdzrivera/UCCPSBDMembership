@@ -86,7 +86,16 @@ public class MembershipDbMigrationService : ITransientDependency
 
         foreach (var migrator in _dbSchemaMigrators)
         {
-            await migrator.MigrateAsync();
+            Logger.LogInformation($"Running migrator: {migrator.GetType().FullName}");
+            try 
+            {
+                await migrator.MigrateAsync();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, $"Migrator {migrator.GetType().FullName} failed!");
+                throw;
+            }
         }
     }
 
