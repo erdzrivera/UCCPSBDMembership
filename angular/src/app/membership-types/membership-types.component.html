@@ -1,10 +1,11 @@
 <div class="card">
-    <div class="card-header bg-white">
+    <div class="card-header bg-transparent">
         <div class="row align-items-center">
             <div class="col">
                 <h2 class="custom-page-title mb-0">
-                    <i class="fa fa-tags me-2"></i> {{ '::Membership Types' | abpLocalization }}
+                    <i class="fa fa-tags me-2" style="color: #3a416f !important;"></i> {{ '::Membership Types' | abpLocalization }}
                 </h2>
+                <small class="text-muted">Manage your official membership classifications</small>
             </div>
             <div class="col-auto">
                 <button *abpPermission="'Membership.MembershipTypes.Create'" id="create" class="btn btn-primary"

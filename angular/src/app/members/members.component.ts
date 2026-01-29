@@ -16,9 +16,32 @@ export class MembersComponent implements OnInit {
 
   selectedMember = {} as MemberDto;
   isModalOpen = false;
-  searchText = '';
+  lastName = '';
+  firstName = '';
+  middleName = '';
   birthdayStart = '';
   birthdayEnd = '';
+
+  selectedOrg = '';
+  selectedType = '';
+  selectedStatus = null;
+
+  organizations = [
+    { id: 'UCSCA', name: 'UCSCA' },
+    { id: 'UCM', name: 'UCM' },
+    { id: 'CWA', name: 'CWA' },
+    { id: 'CYAF', name: 'CYAF' },
+    { id: 'CYF', name: 'CYF' },
+    { id: 'KIDS', name: 'KIDS' }
+  ];
+
+  memberTypes = [
+    { id: '1', name: 'Regular' },
+    { id: '2', name: 'Associate' },
+    { id: '3', name: 'Affiliate' },
+    { id: '4', name: 'Preparatory' },
+    { id: '5', name: 'Honorary' }
+  ];
 
   constructor(
     public readonly list: ListService,
@@ -34,9 +57,14 @@ export class MembersComponent implements OnInit {
       }
       return this.memberService.getList({
         ...query,
-        filter: this.searchText,
+        lastName: this.lastName,
+        firstName: this.firstName,
+        middleName: this.middleName,
         birthdayStart: this.birthdayStart,
-        birthdayEnd: this.birthdayEnd
+        birthdayEnd: this.birthdayEnd,
+        organizationId: this.selectedOrg,
+        memberTypeId: this.selectedType,
+        isActive: this.selectedStatus
       } as any);
     }).subscribe(response => {
       this.member = response;

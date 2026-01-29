@@ -85,6 +85,45 @@ public class MemberAppService : ApplicationService, IMemberAppService
                     }
                 }
 
+                if (!input.OrganizationId.IsNullOrWhiteSpace())
+                {
+                    // Map the input organization (likely name or code) to ID if needed, 
+                    // but if the frontend sends the Name/Abbreviation directly (as stored in some cases), 
+                    // or if it sends the mapped ID ("1", "2"). 
+                    // Let's assume frontend sends the value stored in DB or we use the mapping helper.
+                    // The MapOrganizationToId helper maps "UCSCA" -> "1".
+                    // If frontend sends "UCSCA", we map it. 
+                    var orgId = MapOrganizationToId(input.OrganizationId); 
+                    query = query.Where(x => x.OrganizationId == orgId);
+                }
+
+                if (!input.MemberTypeId.IsNullOrWhiteSpace())
+                {
+                    // Similar mapping for Member Type
+                    var typeId = MapMemberTypeToId(input.MemberTypeId);
+                    query = query.Where(x => x.MemberTypeId == typeId);
+                }
+
+                if (input.IsActive.HasValue)
+                {
+                    query = query.Where(x => x.IsActive == input.IsActive.Value);
+                }
+
+                if (!input.LastName.IsNullOrWhiteSpace())
+                {
+                    query = query.Where(x => x.LastName.ToLower().Contains(input.LastName.ToLower()));
+                }
+
+                if (!input.FirstName.IsNullOrWhiteSpace())
+                {
+                    query = query.Where(x => x.FirstName.ToLower().Contains(input.FirstName.ToLower()));
+                }
+
+                if (!input.MiddleName.IsNullOrWhiteSpace())
+                {
+                    query = query.Where(x => x.MiddleName.ToLower().Contains(input.MiddleName.ToLower()));
+                }
+
                 var totalCount = await AsyncExecuter.CountAsync(query);
 
                 if (input.Sorting?.Contains("memberTypeId", StringComparison.OrdinalIgnoreCase) == true)
