@@ -22,9 +22,9 @@
       <div class="col-12 col-md-3">
         <label class="small text-muted fw-bold mb-1 d-block" style="font-size: 0.7rem;">LAST NAME</label>
         <div class="input-group input-group-sm">
-          <input type="text" class="form-control border-start-0 ps-0" placeholder="Filter by last name..."
+          <input type="text" class="form-control border-end-0" placeholder="Filter by last name..."
             [(ngModel)]="lastName" (keyup)="list.get()">
-          <span class="input-group-text bg-white border-end-0">
+          <span class="input-group-text bg-white border-start-0">
             <i class="fa fa-search text-muted"></i>
           </span>
         </div>
@@ -33,9 +33,9 @@
       <div class="col-12 col-md-3">
         <label class="small text-muted fw-bold mb-1 d-block" style="font-size: 0.7rem;">FIRST NAME</label>
         <div class="input-group input-group-sm">
-          <input type="text" class="form-control border-start-0 ps-0" placeholder="Filter by first name..."
+          <input type="text" class="form-control border-end-0" placeholder="Filter by first name..."
             [(ngModel)]="firstName" (keyup)="list.get()">
-          <span class="input-group-text bg-white border-end-0">
+          <span class="input-group-text bg-white border-start-0">
             <i class="fa fa-search text-muted"></i>
           </span>
         </div>
@@ -44,9 +44,9 @@
       <div class="col-12 col-md-3">
         <label class="small text-muted fw-bold mb-1 d-block" style="font-size: 0.7rem;">MIDDLE NAME</label>
         <div class="input-group input-group-sm">
-          <input type="text" class="form-control border-start-0 ps-0" placeholder="Filter by middle name..."
+          <input type="text" class="form-control border-end-0" placeholder="Filter by middle name..."
             [(ngModel)]="middleName" (keyup)="list.get()">
-          <span class="input-group-text bg-white border-end-0">
+          <span class="input-group-text bg-white border-start-0">
             <i class="fa fa-search text-muted"></i>
           </span>
         </div>
@@ -65,20 +65,20 @@
       <div class="col-12 col-md-3">
         <label class="small text-muted fw-bold mb-1 d-block" style="font-size: 0.7rem;">BIRTHDAY FROM</label>
         <div class="input-group input-group-sm">
-          <span class="input-group-text bg-light border-end-0">
+          <input type="date" class="form-control border-end-0" [(ngModel)]="birthdayStart" (change)="list.get()">
+          <span class="input-group-text bg-light border-start-0">
             <i class="fa fa-calendar text-muted"></i>
           </span>
-          <input type="date" class="form-control border-start-0 ps-0" [(ngModel)]="birthdayStart" (change)="list.get()">
         </div>
       </div>
 
       <div class="col-12 col-md-3">
         <label class="small text-muted fw-bold mb-1 d-block" style="font-size: 0.7rem;">BIRTHDAY TO</label>
         <div class="input-group input-group-sm">
-          <span class="input-group-text bg-light border-end-0">
+          <input type="date" class="form-control border-end-0" [(ngModel)]="birthdayEnd" (change)="list.get()">
+          <span class="input-group-text bg-light border-start-0">
             <i class="fa fa-calendar text-muted"></i>
           </span>
-          <input type="date" class="form-control border-start-0 ps-0" [(ngModel)]="birthdayEnd" (change)="list.get()">
         </div>
       </div>
 

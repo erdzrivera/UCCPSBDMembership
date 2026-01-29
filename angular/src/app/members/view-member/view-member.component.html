@@ -59,7 +59,8 @@
                                 'M').charAt(0).toUpperCase() }}
                             </div>
                             <div class="ms-4 mb-2">
-                                <h2 class="fw-bold mb-1 text-dark" *ngIf="!isEditing">{{ member.firstName }} {{
+                                <h2 class="fw-bold mb-1 text-dark" *ngIf="!isEditing" style="padding-bottom: 10px;">{{
+                                    member.firstName }} {{
                                     member.middleName ? member.middleName + ' ' : '' }}{{ member.lastName }}</h2>
                                 <h2 class="fw-bold mb-1 text-dark" *ngIf="isEditing">{{ form.get('firstName')?.value }}
                                     {{ form.get('lastName')?.value }}</h2>
@@ -136,7 +137,8 @@
 
                         <div class="row g-4">
                             <div class="col-md-4">
-                                <label class="form-label text-muted small fw-bold mb-1">FIRST NAME *</label>
+                                <label class="form-label text-muted small fw-bold mb-1">FIRST NAME <span
+                                        *ngIf="isEditing">*</span></label>
                                 <div *ngIf="!isEditing" class="fs-6 fw-medium text-dark text-break">{{ member.firstName
                                     }}</div>
                                 <input *ngIf="isEditing" type="text" class="form-control" formControlName="firstName"
@@ -149,14 +151,16 @@
                                 <input *ngIf="isEditing" type="text" class="form-control" formControlName="middleName">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label text-muted small fw-bold mb-1">LAST NAME *</label>
+                                <label class="form-label text-muted small fw-bold mb-1">LAST NAME <span
+                                        *ngIf="isEditing">*</span></label>
                                 <div *ngIf="!isEditing" class="fs-6 fw-medium text-dark text-break">{{ member.lastName
                                     }}</div>
                                 <input *ngIf="isEditing" type="text" class="form-control" formControlName="lastName"
                                     [class.is-invalid]="form.get('lastName')?.invalid && form.get('lastName')?.touched">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label text-muted small fw-bold mb-1">ORGANIZATION *</label>
+                                <label class="form-label text-muted small fw-bold mb-1">ORGANIZATION <span
+                                        *ngIf="isEditing">*</span></label>
                                 <div *ngIf="!isEditing" class="mt-1">
                                     <span class="badge bg-secondary-subtle text-secondary border px-3 py-2">{{
                                         getOrganizationName(member.organizationId) }}</span>
@@ -169,7 +173,8 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label text-muted small fw-bold mb-1">MEMBERSHIP TYPE *</label>
+                                <label class="form-label text-muted small fw-bold mb-1">MEMBERSHIP TYPE <span
+                                        *ngIf="isEditing">*</span></label>
                                 <div *ngIf="!isEditing" class="mt-1">
                                     <span class="badge bg-info-subtle text-info border px-3 py-2">{{
                                         getMemberTypeName(member.memberTypeId) }}</span>
@@ -209,7 +214,8 @@
 
                         <div class="row g-4">
                             <div class="col-md-6">
-                                <label class="form-label text-muted small fw-bold mb-1">BIRTHDAY *</label>
+                                <label class="form-label text-muted small fw-bold mb-1">BIRTHDAY <span
+                                        *ngIf="isEditing">*</span></label>
                                 <div *ngIf="!isEditing" class="fs-6 fw-medium text-dark">{{ member.birthday | date:
                                     'longDate' }}</div>
                                 <input *ngIf="isEditing" type="date" class="form-control" formControlName="birthday"
