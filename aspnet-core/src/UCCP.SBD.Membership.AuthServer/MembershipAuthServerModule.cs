@@ -218,6 +218,7 @@ public class MembershipAuthServerModule : AbpModule
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
  
+        /* 
         // Auto-create database schema on startup
         using (var scope = context.ServiceProvider.CreateScope())
         {
@@ -229,6 +230,7 @@ public class MembershipAuthServerModule : AbpModule
                 .GetRequiredService<Volo.Abp.Data.IDataSeeder>()
                 .SeedAsync(new Volo.Abp.Data.DataSeedContext());
         }
+        */
 
         if (env.IsDevelopment())
         {

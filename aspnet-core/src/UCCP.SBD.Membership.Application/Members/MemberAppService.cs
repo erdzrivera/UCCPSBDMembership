@@ -1,5 +1,6 @@
-using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using UCCP.SBD.Membership.Permissions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -8,9 +9,11 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
-namespace UCCP.SBD.Membership.Members
-{
-    public class MemberAppService : ApplicationService, IMemberAppService
+using System;
+
+namespace UCCP.SBD.Membership.Members;
+
+public class MemberAppService : ApplicationService, IMemberAppService
     {
         private readonly IRepository<Member, Guid> _repository;
         private readonly Microsoft.Extensions.Logging.ILogger<MemberAppService> _logger;
@@ -21,12 +24,14 @@ namespace UCCP.SBD.Membership.Members
             _logger = logger;
         }
 
+        [Authorize(MembershipPermissions.Members.Default)]
         public async Task<MemberDto> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(id);
             return MapToDto(entity);
         }
 
+        [Authorize(MembershipPermissions.Members.Default)]
         public async Task<PagedResultDto<MemberDto>> GetListAsync(GetMembersInput input)
         {
             try
@@ -97,6 +102,7 @@ namespace UCCP.SBD.Membership.Members
             }
         }
 
+        [Authorize(MembershipPermissions.Members.Create)]
         public async Task<MemberDto> CreateAsync(CreateUpdateMemberDto input)
         {
             try 
@@ -126,6 +132,7 @@ namespace UCCP.SBD.Membership.Members
             }
         }
 
+        [Authorize(MembershipPermissions.Members.Edit)]
         public async Task<MemberDto> UpdateAsync(Guid id, CreateUpdateMemberDto input)
         {
             var entity = await _repository.GetAsync(id);
@@ -144,6 +151,7 @@ namespace UCCP.SBD.Membership.Members
             return MapToDto(entity);
         }
 
+        [Authorize(MembershipPermissions.Members.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);

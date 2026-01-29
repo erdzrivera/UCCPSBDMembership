@@ -1,4 +1,4 @@
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ListService, PagedResultDto, PermissionService } from '@abp/ng.core';
 import { Component, OnInit } from '@angular/core';
 import { MembershipTypeService, MembershipTypeDto } from '../proxy/members';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -21,8 +21,14 @@ export class MembershipTypesComponent implements OnInit {
         public readonly list: ListService,
         private membershipTypeService: MembershipTypeService,
         private fb: FormBuilder,
-        private confirmation: ConfirmationService
+        private confirmation: ConfirmationService,
+        private permissionService: PermissionService
     ) { }
+
+    get canManage(): boolean {
+        return this.permissionService.getGrantedPolicy('Membership.MembershipTypes.Edit') ||
+            this.permissionService.getGrantedPolicy('Membership.MembershipTypes.Delete');
+    }
 
     ngOnInit() {
         const membershipTypeStreamCreator = (query) => {

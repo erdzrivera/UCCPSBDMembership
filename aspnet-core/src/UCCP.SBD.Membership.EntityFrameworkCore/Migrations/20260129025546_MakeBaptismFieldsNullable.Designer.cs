@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UCCP.SBD.Membership.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace UCCP.SBD.Membership.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(MembershipDbContext))]
-    partial class MembershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260129025546_MakeBaptismFieldsNullable")]
+    partial class MakeBaptismFieldsNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,11 @@ namespace UCCP.SBD.Membership.EntityFrameworkCore.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("BaptismDate")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("BaptizedBy")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 

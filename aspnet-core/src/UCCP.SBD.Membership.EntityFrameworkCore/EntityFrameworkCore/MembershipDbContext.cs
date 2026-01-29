@@ -79,8 +79,8 @@ public class MembershipDbContext :
             b.Property(x => x.LastName).IsRequired().HasMaxLength(128);
             b.Property(x => x.Birthday).IsRequired();
             b.Property(x => x.Occupation).IsRequired().HasMaxLength(256);
-            b.Property(x => x.BaptismDate).IsRequired();
-            b.Property(x => x.BaptizedBy).IsRequired().HasMaxLength(256);
+            b.Property(x => x.BaptismDate).IsRequired(false);
+            b.Property(x => x.BaptizedBy).IsRequired(false).HasMaxLength(256);
             b.Property(x => x.MemberTypeId).IsRequired();
             b.Property(x => x.OrganizationId).IsRequired();
             b.Property(x => x.PlaceOfBirth).IsRequired(false);

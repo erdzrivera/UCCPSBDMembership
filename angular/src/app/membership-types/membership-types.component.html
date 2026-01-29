@@ -7,7 +7,8 @@
                 </h2>
             </div>
             <div class="col-auto">
-                <button id="create" class="btn btn-primary" type="button" (click)="createMembershipType()">
+                <button *abpPermission="'Membership.MembershipTypes.Create'" id="create" class="btn btn-primary"
+                    type="button" (click)="createMembershipType()">
                     <i class="fa fa-plus me-1"></i>
                     <span>{{ '::Add Membership Type' | abpLocalization }}</span>
                 </button>
@@ -20,7 +21,8 @@
             <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"
                 [maxWidth]="150"></ngx-datatable-column>
             <ngx-datatable-column [name]="'::Description' | abpLocalization" prop="description"></ngx-datatable-column>
-            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
+            <ngx-datatable-column *ngIf="canManage" [name]="'::Actions' | abpLocalization" [maxWidth]="200"
+                [sortable]="false">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     <div ngbDropdown container="body" class="d-inline-block">
                         <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -28,10 +30,12 @@
                             <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
                         </button>
                         <div ngbDropdownMenu>
-                            <button ngbDropdownItem (click)="editMembershipType(row.id)">
+                            <button *abpPermission="'Membership.MembershipTypes.Edit'" ngbDropdownItem
+                                (click)="editMembershipType(row.id)">
                                 {{ '::Edit' | abpLocalization }}
                             </button>
-                            <button ngbDropdownItem (click)="delete(row.id)">
+                            <button *abpPermission="'Membership.MembershipTypes.Delete'" ngbDropdownItem
+                                (click)="delete(row.id)">
                                 {{ '::Delete' | abpLocalization }}
                             </button>
                         </div>
@@ -69,7 +73,9 @@
         <button type="button" class="btn btn-secondary" abpClose>
             {{ '::Cancel' | abpLocalization }}
         </button>
-        <button class="btn btn-primary" (click)="save()" [disabled]="form.invalid">
+        <button
+            *abpPermission="selectedMembershipType.id ? 'Membership.MembershipTypes.Edit' : 'Membership.MembershipTypes.Create'"
+            class="btn btn-primary" (click)="save()" [disabled]="form.invalid">
             <i class="fa fa-check me-1"></i>
             {{ '::Save' | abpLocalization }}
         </button>

@@ -10,8 +10,8 @@ namespace UCCP.SBD.Membership.Members
         public string LastName { get; set; }
         public string Birthday { get; set; }
         public string Occupation { get; set; }
-        public string BaptismDate { get; set; }
-        public string BaptizedBy { get; set; }
+        public string? BaptismDate { get; set; }
+        public string? BaptizedBy { get; set; }
         public string? PlaceOfBirth { get; set; }
         public string? FatherName { get; set; }
         public string? MotherName { get; set; }

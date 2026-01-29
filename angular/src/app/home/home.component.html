@@ -40,9 +40,9 @@
               Christ in the Philippines</h1>
             <h2 class="display-6 mb-4" style="color: var(--lpx-primary) !important;">Sambahan sa Baybay Dagat Membership
               System</h2>
-            <p class="lead mb-4">Manage members, organizations, and membership types efficiently.</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-              <a routerLink="/members" class="btn btn-primary btn-lg px-4 gap-3">Manage Members</a>
+              <a *abpPermission="'Membership.Members'" routerLink="/members"
+                class="btn btn-primary btn-lg px-4 gap-3">Manage Members</a>
             </div>
           </div>
         </div>
