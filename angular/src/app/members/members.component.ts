@@ -108,7 +108,7 @@ export class MembersComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file, file.name);
 
-      this.restService.request<void, any>({
+      this.restService.request<FormData, any>({
         method: 'POST',
         url: '/api/app/members/upload-excel',
         body: formData
