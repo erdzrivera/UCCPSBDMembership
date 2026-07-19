@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace UCCP.SBD.Membership.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(MembershipDbContext))]
-    [Migration("20260129025546_MakeBaptismFieldsNullable")]
-    partial class MakeBaptismFieldsNullable
+    [Migration("20260719013906_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,9 @@ namespace UCCP.SBD.Membership.EntityFrameworkCore.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("BaptismDate")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("BaptizedBy")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 

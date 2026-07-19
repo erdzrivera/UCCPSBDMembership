@@ -25,7 +25,6 @@ using Volo.Abp.Auditing;
 using Volo.Abp.Autofac;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Caching;
-using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.OpenIddict;
@@ -38,9 +37,8 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Medallion.Threading;
-using Medallion.Threading.Redis;
+using Medallion.Threading.FileSystem;
 using Volo.Abp.DistributedLocking;
-using StackExchange.Redis;
 
 namespace UCCP.SBD.Membership;
 
@@ -53,7 +51,6 @@ namespace UCCP.SBD.Membership;
     typeof(MembershipEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
-    typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpDistributedLockingModule)
     )]
 public class MembershipAuthServerModule : AbpModule
@@ -105,8 +102,7 @@ public class MembershipAuthServerModule : AbpModule
 
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
-            return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
+            return new FileDistributedSynchronizationProvider(new DirectoryInfo(Path.Combine(Path.GetTempPath(), "abp-distributed-locks")));
         });
 
         // ?? Swagger setup
