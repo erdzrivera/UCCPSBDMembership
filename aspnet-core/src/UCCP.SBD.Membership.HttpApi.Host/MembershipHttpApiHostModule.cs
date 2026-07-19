@@ -33,6 +33,10 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.Uow;
 using Volo.Abp.VirtualFileSystem;
+using Medallion.Threading;
+using Medallion.Threading.Redis;
+using Volo.Abp.DistributedLocking;
+using StackExchange.Redis;
 
 namespace UCCP.SBD.Membership;
 
@@ -45,7 +49,8 @@ namespace UCCP.SBD.Membership;
     typeof(MembershipEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
-    typeof(AbpCachingStackExchangeRedisModule)
+    typeof(AbpCachingStackExchangeRedisModule),
+    typeof(AbpDistributedLockingModule)
 )]
 public class MembershipHttpApiHostModule : AbpModule
 {
@@ -53,6 +58,12 @@ public class MembershipHttpApiHostModule : AbpModule
     {
         var configuration = context.Services.GetConfiguration();
         var hostingEnvironment = context.Services.GetHostingEnvironment();
+
+        context.Services.AddSingleton<IDistributedLockProvider>(sp =>
+        {
+            var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
+            return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
+        });
 
         ConfigureConventionalControllers();
         ConfigureAuthentication(context, configuration);
