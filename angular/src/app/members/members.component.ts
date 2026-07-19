@@ -1,7 +1,7 @@
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ListService, PagedResultDto, RestService } from '@abp/ng.core';
 import { Component, OnInit } from '@angular/core';
 import { MemberService, MemberDto } from '../proxy/members';
-import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
 import { Router } from '@angular/router';
 
 @Component({
@@ -47,7 +47,9 @@ export class MembersComponent implements OnInit {
     public readonly list: ListService,
     private memberService: MemberService,
     private confirmation: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private restService: RestService,
+    private toaster: ToasterService
   ) { }
 
   ngOnInit() {
@@ -98,5 +100,30 @@ export class MembersComponent implements OnInit {
 
   onSaved() {
     this.list.get();
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+
+      this.restService.request<void, any>({
+        method: 'POST',
+        url: '/api/app/members/upload-excel',
+        body: formData
+      }).subscribe({
+        next: (response: any) => {
+          this.toaster.success(`Successfully uploaded ${response?.count || 'the'} members!`, 'Success');
+          this.list.get();
+        },
+        error: (err) => {
+          this.toaster.error('Failed to upload Excel file.', 'Error');
+          console.error(err);
+        }
+      });
+      // reset the file input so it can be selected again
+      event.target.value = null;
+    }
   }
 }

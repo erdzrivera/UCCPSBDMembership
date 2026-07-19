@@ -8,11 +8,20 @@
       <small class="text-muted">Manage your organization's membership directory</small>
     </div>
 
-    <button *abpPermission="'Membership.Members.Create'" id="create" class="btn btn-primary btn-sm px-4" type="button"
-      (click)="createMember()">
-      <i class="fa fa-plus me-1"></i>
-      <span>{{ '::Add Member' | abpLocalization }}</span>
-    </button>
+    <div class="d-flex gap-2">
+      <input type="file" #fileInput hidden accept=".xlsx" (change)="onFileSelected($event)">
+      <button *abpPermission="'Membership.Members.Create'" class="btn btn-outline-primary btn-sm px-4" type="button"
+        (click)="fileInput.click()">
+        <i class="fa fa-upload me-1"></i>
+        <span>Upload Excel</span>
+      </button>
+
+      <button *abpPermission="'Membership.Members.Create'" id="create" class="btn btn-primary btn-sm px-4" type="button"
+        (click)="createMember()">
+        <i class="fa fa-plus me-1"></i>
+        <span>{{ '::Add Member' | abpLocalization }}</span>
+      </button>
+    </div>
   </div>
 
   <div class="card-body px-4">
