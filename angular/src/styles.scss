@@ -691,3 +691,10 @@ body abp-roles .ngx-datatable.material .datatable-header-cell {
 .ngx-datatable.clickable-rows .datatable-body-row {
   cursor: pointer !important;
 }
+
+/* Hide default ngx-datatable spinner/progress loaders to avoid duplicates */
+datatable-loading-indicator,
+.progress-linear,
+.ngx-datatable .loading-indicator {
+  display: none !important;
+}
