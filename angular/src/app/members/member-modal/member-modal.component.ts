@@ -70,7 +70,7 @@ export class MemberModalComponent implements OnInit, OnChanges {
             lastName: [selectedMember.lastName || '', Validators.required],
             birthday: [selectedMember.birthday || null, [Validators.required, this.noFutureDateValidator.bind(this)]],
             occupation: [selectedMember.occupation || ''],
-            baptismDate: [selectedMember.baptismDate || null],
+            baptismDate: [selectedMember.baptismDate || null, [this.noFutureDateValidator.bind(this)]],
             baptizedBy: [selectedMember.baptizedBy || ''],
             memberTypeId: [selectedMember.memberTypeId || null, Validators.required],
             organizationId: [selectedMember.organizationId || null, Validators.required],

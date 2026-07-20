@@ -160,7 +160,9 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted mb-1">BAPTISM DATE</label>
-                        <input type="date" class="form-control" formControlName="baptismDate" />
+                        <input type="date" class="form-control" formControlName="baptismDate"
+                            [max]="today"
+                            [class.is-invalid]="form.get('baptismDate')?.invalid && form.get('baptismDate')?.touched" />
                     </div>
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted mb-1">OFFICIATING MINISTER</label>

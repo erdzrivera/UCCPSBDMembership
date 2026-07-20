@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="card-body">
-        <ngx-datatable [rows]="membershipType.items" [count]="membershipType.totalCount" [list]="list" default
+        <ngx-datatable [rows]="membershipType.items" [count]="membershipType.totalCount" [list]="list" default [loadingIndicator]="false"
             class="material">
             <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"
                 [maxWidth]="150"></ngx-datatable-column>

@@ -23,6 +23,8 @@ import { ThemeSharedModule, withHttpErrorConfig, withValidationBluePrint, provid
 import { IDENTITY_CONFIG_PROVIDERS } from './shared/identity-config';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { LocationStrategy } from '@angular/common';
+import { StaticLocationStrategy } from './shared/services/static-location-strategy';
 
 @NgModule({
   imports: [
@@ -69,6 +71,7 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
     ),
     { provide: TitleStrategy, useClass: AppTitleStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: StaticLocationStrategy },
     ...IDENTITY_CONFIG_PROVIDERS
   ],
   bootstrap: [AppComponent],
