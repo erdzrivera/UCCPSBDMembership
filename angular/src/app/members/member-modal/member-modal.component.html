@@ -1,5 +1,5 @@
 <abp-modal [(visible)]="visible" (visibleChange)="close()"
-    [options]="{size: 'xl', centered: true, modalClass: 'premium-modal'}">
+    [options]="{size: 'xl', centered: true, windowClass: 'premium-modal'}">
     <ng-template #abpHeader>
         <div class="d-flex align-items-center w-100">
             <i class="fas fa-user-plus fs-4 me-3"></i>
@@ -189,7 +189,7 @@
             </button>
 
             <!-- Right Button -->
-            <button *ngIf="activeTab !== 'baptism'" type="button" class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="nextTab()" [disabled]="!isTabValid(activeTab)">
+            <button *ngIf="activeTab !== 'baptism'" type="button" class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="nextTab()">
                 <span>Next</span>
                 <i class="fas fa-arrow-right"></i>
             </button>

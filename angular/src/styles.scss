@@ -335,10 +335,14 @@ lpx-navbar nav {
 
 /* --- Premium Modal Upgrade --- */
 .premium-modal {
-  @media (min-width: 576px) {
-    max-width: 850px !important;
-    width: 850px !important;
+  .modal-dialog {
+    @media (min-width: 576px) {
+      max-width: 850px !important;
+      width: 850px !important;
+    }
+  }
 
+  @media (min-width: 576px) {
     .modal-content {
       height: 620px !important;
       min-height: 620px !important;
