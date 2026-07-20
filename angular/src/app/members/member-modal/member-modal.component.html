@@ -193,11 +193,13 @@
                 <span>Next</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
-            <button *ngIf="activeTab === 'baptism'" *abpPermission="memberId ? 'Membership.Members.Edit' : 'Membership.Members.Create'" type="button"
-                class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="save()" [disabled]="form?.invalid">
-                <i class="fas fa-save"></i>
-                <span class="fw-bold">{{ (memberId ? '::Update Member' : '::Register Member') | abpLocalization }}</span>
-            </button>
+            <ng-container *abpPermission="memberId ? 'Membership.Members.Edit' : 'Membership.Members.Create'">
+                <button *ngIf="activeTab === 'baptism'" type="button"
+                    class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="save()" [disabled]="form?.invalid">
+                    <i class="fas fa-save"></i>
+                    <span class="fw-bold">{{ (memberId ? '::Update Member' : '::Register Member') | abpLocalization }}</span>
+                </button>
+            </ng-container>
         </div>
     </ng-template>
 </abp-modal>
