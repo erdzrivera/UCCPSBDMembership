@@ -3,6 +3,7 @@ import { AuthService, ConfigStateService } from '@abp/ng.core';
 import { Component, inject, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { LoadingService } from './shared/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(3px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -40,6 +42,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   private oauthService = inject(OAuthService);
   private router = inject(Router);
   private configState = inject(ConfigStateService);
+  private loadingService = inject(LoadingService);
 
   isLoading = false;
   private observer: MutationObserver | undefined;
@@ -48,13 +51,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.configureOAuth();
     this.authService.init();
 
+    // Subscribe to loading service to update spinner visibility
+    this.loadingService.loading$.subscribe((loading) => {
+      this.isLoading = loading;
+    });
+
     // Subscribe to Router Events for Spinner
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        this.isLoading = true;
+        this.loadingService.show();
       }
       if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-        this.isLoading = false;
+        this.loadingService.hide();
         this.updateSidebarVisibility();
       }
     });

@@ -21,6 +21,8 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { SharedModule } from './shared/shared.module';
 import { ThemeSharedModule, withHttpErrorConfig, withValidationBluePrint, provideAbpThemeShared } from '@abp/ng.theme.shared';
 import { IDENTITY_CONFIG_PROVIDERS } from './shared/identity-config';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 @NgModule({
   imports: [
@@ -66,6 +68,7 @@ import { IDENTITY_CONFIG_PROVIDERS } from './shared/identity-config';
       })
     ),
     { provide: TitleStrategy, useClass: AppTitleStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     ...IDENTITY_CONFIG_PROVIDERS
   ],
   bootstrap: [AppComponent],
