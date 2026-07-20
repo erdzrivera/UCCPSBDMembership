@@ -18,6 +18,17 @@ export class MemberModalComponent implements OnInit, OnChanges {
     membershipTypes: MembershipTypeDto[] = [];
     organizations: OrganizationDto[] = [];
     activeTab = 'personal';
+    today = new Date().toISOString().split('T')[0];
+
+    noFutureDateValidator(control: any) {
+        if (!control.value) {
+            return null;
+        }
+        const selectedDate = new Date(control.value);
+        const todayDate = new Date();
+        todayDate.setHours(0, 0, 0, 0);
+        return selectedDate > todayDate ? { futureDate: true } : null;
+    }
 
     constructor(
         private fb: FormBuilder,
@@ -57,7 +68,7 @@ export class MemberModalComponent implements OnInit, OnChanges {
             firstName: [selectedMember.firstName || '', Validators.required],
             middleName: [selectedMember.middleName || ''],
             lastName: [selectedMember.lastName || '', Validators.required],
-            birthday: [selectedMember.birthday || null, Validators.required],
+            birthday: [selectedMember.birthday || null, [Validators.required, this.noFutureDateValidator.bind(this)]],
             occupation: [selectedMember.occupation || ''],
             baptismDate: [selectedMember.baptismDate || null],
             baptizedBy: [selectedMember.baptizedBy || ''],

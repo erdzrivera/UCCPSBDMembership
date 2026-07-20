@@ -123,6 +123,7 @@
                     <div class="col-md-6">
                         <label class="form-label small fw-bold text-muted mb-1">BIRTHDAY *</label>
                         <input type="date" class="form-control" formControlName="birthday"
+                            [max]="today"
                             [class.is-invalid]="form.get('birthday')?.invalid && form.get('birthday')?.touched" />
                     </div>
                     <div class="col-md-6">

@@ -2,6 +2,7 @@ import { AuthService, AbpApplicationConfigurationService, ConfigStateService } f
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { LoadingService } from '../shared/services/loading.service';
 
 @Component({
 
@@ -16,6 +17,7 @@ export class HomeComponent {
   private router = inject(Router);
   private abpConfigService = inject(AbpApplicationConfigurationService);
   private configState = inject(ConfigStateService);
+  private loadingService = inject(LoadingService);
 
   username = '';
   password = '';
@@ -29,6 +31,7 @@ export class HomeComponent {
   login() {
     this.loginError = '';
     this.isLoggingIn = true;
+    this.loadingService.show();
 
     // Load discovery document first to get the token endpoint
     console.log('Login started for:', this.username);
@@ -67,12 +70,13 @@ export class HomeComponent {
         console.log('Current User State:', config?.currentUser);
         console.log('Granted Policies:', config?.auth?.grantedPolicies);
         this.isLoggingIn = false;
-        this.isLoggingIn = false;
+        this.loadingService.hide();
         // Auto-navigate commented out to show the Home Page content first
         // this.router.navigate(['/members']);
       })
       .catch((err) => {
         this.isLoggingIn = false;
+        this.loadingService.hide();
         console.error('Login error detailed:', err);
         if (err.error === 'invalid_grant' || (err.status === 400 && err.error?.error === 'invalid_grant')) {
           this.loginError = 'Invalid username or password';
