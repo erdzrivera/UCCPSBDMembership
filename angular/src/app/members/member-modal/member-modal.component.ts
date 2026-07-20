@@ -92,4 +92,36 @@ export class MemberModalComponent implements OnInit, OnChanges {
         this.visible = false;
         this.visibleChange.emit(this.visible);
     }
+
+    nextTab() {
+        if (this.activeTab === 'personal') {
+            this.activeTab = 'family';
+        } else if (this.activeTab === 'family') {
+            this.activeTab = 'baptism';
+        }
+    }
+
+    prevTab() {
+        if (this.activeTab === 'family') {
+            this.activeTab = 'personal';
+        } else if (this.activeTab === 'baptism') {
+            this.activeTab = 'family';
+        }
+    }
+
+    isTabValid(tab: string): boolean {
+        if (!this.form) return false;
+        if (tab === 'personal') {
+            return (
+                (this.form.get('firstName')?.valid ?? false) &&
+                (this.form.get('lastName')?.valid ?? false) &&
+                (this.form.get('organizationId')?.valid ?? false) &&
+                (this.form.get('memberTypeId')?.valid ?? false)
+            );
+        }
+        if (tab === 'family') {
+            return this.form.get('birthday')?.valid ?? false;
+        }
+        return true;
+    }
 }

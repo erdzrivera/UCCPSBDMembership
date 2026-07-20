@@ -178,15 +178,25 @@
 
     <ng-template #abpFooter>
         <div class="d-flex justify-content-between w-100 p-2">
-            <button type="button" class="btn btn-light border px-4 hstack gap-2" (click)="close()">
+            <!-- Left Button -->
+            <button *ngIf="activeTab === 'personal'" type="button" class="btn btn-light border px-4 hstack gap-2" (click)="close()">
                 <i class="fas fa-times"></i>
                 <span>{{ '::Cancel' | abpLocalization }}</span>
             </button>
-            <button *abpPermission="memberId ? 'Membership.Members.Edit' : 'Membership.Members.Create'" type="button"
+            <button *ngIf="activeTab !== 'personal'" type="button" class="btn btn-light border px-4 hstack gap-2" (click)="prevTab()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back</span>
+            </button>
+
+            <!-- Right Button -->
+            <button *ngIf="activeTab !== 'baptism'" type="button" class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="nextTab()" [disabled]="!isTabValid(activeTab)">
+                <span>Next</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button *ngIf="activeTab === 'baptism'" *abpPermission="memberId ? 'Membership.Members.Edit' : 'Membership.Members.Create'" type="button"
                 class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="save()" [disabled]="form?.invalid">
                 <i class="fas fa-save"></i>
-                <span class="fw-bold">{{ (memberId ? '::Update Member' : '::Register Member') | abpLocalization
-                    }}</span>
+                <span class="fw-bold">{{ (memberId ? '::Update Member' : '::Register Member') | abpLocalization }}</span>
             </button>
         </div>
     </ng-template>

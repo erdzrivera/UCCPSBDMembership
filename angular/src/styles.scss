@@ -335,6 +335,22 @@ lpx-navbar nav {
 
 /* --- Premium Modal Upgrade --- */
 .premium-modal {
+  @media (min-width: 576px) {
+    max-width: 850px !important;
+    width: 850px !important;
+
+    .modal-content {
+      height: 620px !important;
+      min-height: 620px !important;
+      max-height: 620px !important;
+    }
+  }
+
+  .modal-content {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
   .modal-header {
     background: linear-gradient(135deg, var(--lpx-primary) 0%, var(--lpx-brand) 100%) !important;
     color: white !important;
@@ -342,6 +358,7 @@ lpx-navbar nav {
     padding: 1rem 1.5rem !important;
     display: flex !important;
     align-items: center !important;
+    flex-shrink: 0 !important;
 
     .modal-title {
       width: 100%;
@@ -364,12 +381,15 @@ lpx-navbar nav {
   .modal-body {
     padding: 1.5rem !important;
     background-color: #fcfcfc;
+    flex-grow: 1 !important;
+    overflow-y: auto !important;
   }
 
   .modal-footer {
     border-top: 1px solid #f0f0f0 !important;
     padding: 1rem 1.5rem !important;
     background-color: #fff;
+    flex-shrink: 0 !important;
   }
 }
 
