@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template #abpBody>
-        <div class="card-header bg-white border-bottom-0 pt-2 px-2 mb-3">
+        <div class="card-header bg-white border-bottom-0 pt-0 px-2 mb-3">
             <ul class="nav nav-tabs card-header-tabs" style="border-bottom: 2px solid #f0f2f5;">
                 <li class="nav-item">
                     <a class="nav-link" [class.active]="activeTab === 'personal'" (click)="activeTab = 'personal'"
@@ -178,28 +178,35 @@
 
     <ng-template #abpFooter>
         <div class="d-flex justify-content-between w-100 p-2">
-            <!-- Left Button -->
-            <button *ngIf="activeTab === 'personal'" type="button" class="btn btn-light border px-4 hstack gap-2" (click)="close()">
+            <!-- Left: Cancel (Always visible) -->
+            <button type="button" class="btn btn-light border px-4 hstack gap-2" (click)="close()">
                 <i class="fas fa-times"></i>
                 <span>{{ '::Cancel' | abpLocalization }}</span>
             </button>
-            <button *ngIf="activeTab !== 'personal'" type="button" class="btn btn-light border px-4 hstack gap-2" (click)="prevTab()">
-                <i class="fas fa-arrow-left"></i>
-                <span>Back</span>
-            </button>
 
-            <!-- Right Button -->
-            <button *ngIf="activeTab !== 'baptism'" type="button" class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="nextTab()">
-                <span>Next</span>
-                <i class="fas fa-arrow-right"></i>
-            </button>
-            <ng-container *abpPermission="memberId ? 'Membership.Members.Edit' : 'Membership.Members.Create'">
-                <button *ngIf="activeTab === 'baptism'" type="button"
-                    class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="save()" [disabled]="form?.invalid">
-                    <i class="fas fa-save"></i>
-                    <span class="fw-bold">{{ (memberId ? '::Update Member' : '::Register Member') | abpLocalization }}</span>
+            <!-- Right: Navigation buttons -->
+            <div class="d-flex gap-2">
+                <!-- Back Button (Visible on Tab 2 and Tab 3) -->
+                <button *ngIf="activeTab !== 'personal'" type="button" class="btn btn-light border px-4 hstack gap-2" (click)="prevTab()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
                 </button>
-            </ng-container>
+
+                <!-- Next Button (Visible on Tab 1 and Tab 2) -->
+                <button *ngIf="activeTab !== 'baptism'" type="button" class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="nextTab()">
+                    <span>Next</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <!-- Save/Register/Update Button (Visible on Tab 3) -->
+                <ng-container *abpPermission="memberId ? 'Membership.Members.Edit' : 'Membership.Members.Create'">
+                    <button *ngIf="activeTab === 'baptism'" type="button"
+                        class="btn btn-primary px-5 shadow-sm hstack gap-2" (click)="save()" [disabled]="form?.invalid">
+                        <i class="fas fa-save"></i>
+                        <span class="fw-bold">{{ (memberId ? '::Update Member' : '::Register Member') | abpLocalization }}</span>
+                    </button>
+                </ng-container>
+            </div>
         </div>
     </ng-template>
 </abp-modal>

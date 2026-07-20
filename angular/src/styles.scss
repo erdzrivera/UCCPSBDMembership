@@ -356,7 +356,7 @@ lpx-navbar nav {
   }
 
   .modal-header {
-    background: linear-gradient(135deg, var(--lpx-primary) 0%, var(--lpx-brand) 100%) !important;
+    background: #2b3c66 !important;
     color: white !important;
     border-bottom: none !important;
     padding: 1rem 1.5rem !important;
@@ -383,7 +383,7 @@ lpx-navbar nav {
   }
 
   .modal-body {
-    padding: 1.5rem !important;
+    padding: 0 1.5rem 1.5rem 1.5rem !important;
     background-color: #fcfcfc;
     flex-grow: 1 !important;
     overflow-y: auto !important;
